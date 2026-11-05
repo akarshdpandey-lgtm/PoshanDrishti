@@ -10,6 +10,13 @@ no login, no account. Records are stored only on the device (browser
 localStorage), so after the first load it works fully offline — in airplane
 mode, in low-connectivity villages, on any basic smartphone.
 
+It also carries the field tools of the original PoshanDrishti system,
+ported to run entirely on-device: an ASHA Saathi help/FAQ with emergency
+helplines and government schemes, a Hidden Hunger (micronutrient) checklist,
+a pregnancy care checklist, a per-child diet-plan generator, and a progress
+score for follow-up prioritisation — see
+[What's inside — from the original PoshanDrishti](#whats-inside--from-the-original-poshandrishti).
+
 **This is screening support, not a diagnosis.** Every result screen says so,
 in English and in Hindi: *"Screening support — not a diagnosis." /
 "यह जाँच में सहायता है — निदान नहीं है।"*
@@ -249,6 +256,84 @@ a worker with gloves in one hand and a MUAC tape in the other.
 - Anaemia thresholds: WHO guideline on haemoglobin cut-offs (2024).
 - Programme framework: Anemia Mukt Bharat, Ministry of Health & Family
   Welfare, Government of India.
+
+## What's inside — from the original PoshanDrishti
+
+This prototype began as a focused mother–child screening tool. In November
+2026 the features of Akarsh's **original PoshanDrishti system** — a
+full-stack app (React 19 frontend, Flask 3 + SQLite backend, ML models,
+deployed with Render/Vercel configs) — were reviewed module by module, and
+everything that can honestly live in an offline, single-file,
+screening-support app was ported into this file. The ports are adaptations
+of the original code and content (credited here), re-implemented in this
+app's architecture with full English + Hindi strings.
+
+| Original PoshanDrishti feature | Where it lives in this app |
+|---|---|
+| **ASHA Saathi chatbot** (`Chatbot.jsx` — a fixed on-device knowledge base of 16 topics with keyword matching, plus the backend `/api/chatbot` keyword rules) | **Saathi Help** view (home → “Saathi Help”): the same 16 topics as tappable chips + type-to-search with the original keyword matcher, each answer with a Listen (TTS) button. Wording was checked against this app's rules (WHO MUAC bands; anaemia bands labelled as children's/pregnancy bands, with “only a blood test measures Hb” stated plainly). |
+| **Emergency helplines** (`AlertSystem.jsx` + chatbot) | Saathi Help header strip: tap-to-call **108 / 102 / 1098 / 104 / 112**. (One number in the old chatbot text — an “ICDS helpline 1800-345-6789” — could not be verified and was dropped.) |
+| **Government schemes** (from `WombToWorld.jsx`) | Saathi Help: JSY (₹1,400), PMMVY (₹5,000), ICDS, free IFA + Calcium. |
+| **Hidden Hunger Predictor** (`HiddenHunger.jsx` — fully client-side in the original: 18 observable signs, diet-quality and economic levels, six nutrient groups) | **Hidden Hunger check** on each child's family card: the original scoring (base 20; diet low +20 / medium +10; economic low +15 / medium +5; Iron +25, Vitamin A +20, Calcium+Vitamin D +25, Vitamin C +15, B12/Folate +15, Zinc +10; capped at 100) with the original per-nutrient, area-specific (rural/urban/tribal) food lists and tips. Labelled as a diet-and-signs checklist, not a test. A second, simpler frequency-based variant existed on the old backend (`/api/hidden-hunger`); the richer client-side version was ported. |
+| **Womb to World** (`WombToWorld.jsx` — fully client-side pregnancy risk checklist, trimester diets, recommendations, danger signs; backend twin at `/api/womb-to-world`) | **Pregnancy care checklist** in the visit form (appears when the mother is pregnant): the original scoring (base 15; measured-Hb, BMI, age, ANC, diet, economic, diabetes, IFA, tribal-area and water factors) shown as risk/protective factor lists with a care-priority band, plus the original trimester diet plans by area, care actions, and danger signs. Results are kept in the family record. |
+| **Diet Plan generator** (`DietPlan.jsx` — food database of 30 common foods + urban extras with kcal and nutrient tags, area/region priority lists, severity-based meal-plan templates) | A **diet plan card on every child's result**: SAM (8 meals, 1500–1800 kcal), MAM (6 meals, 1200–1500 kcal) and Normal (5 meals, 1000–1200 kcal) plans assembled on-device by food tag from the original food list, area-priority foods first, with the original meal times and tips. The worker picks the area type (rural/urban/tribal) on the card. |
+| **Health Score + segmentation** (`segmentation.py` — 0–100 score from severity/MUAC/weight-for-height/anaemia/oedema, trend vs previous assessment, segments On Track / Improving / Needs Attention, per-segment recommended actions, >30-day stale rule) | A **progress score chip on each child's family card**: same point table and segment rules, the original recommended-action texts (rendered in English/Hindi), and the stale override (“no visit for N days — follow-up due”). Labelled in-app as a simple worklist score, not clinically validated. Two other score variants existed in the old codebase (a page-level variant in `HealthScore.jsx` and a simplified one in the chatbot text); the segmentation engine's is the operative one and is what the Saathi “health score” answer now explains. |
+| **EN/HI language + voice** (`locales/`, `LanguageVoice.jsx`, `VoiceService.js`) | Already native to this app (full EN/HI string tables + Listen buttons); all ported content ships with both languages. |
+
+Two silent defaults in the original code were **deliberately not copied**,
+because a screening tool must not invent measurements:
+
+- The old pregnancy page scored Hb as 11 g/dL when no Hb was entered. Here,
+  an unmeasured Hb simply skips that factor, and the result card says so
+  and asks for a measured test. (If a measured Hb *was* entered in the
+  mother module, it is used and classified with WHO 2024 bands as before.)
+- The old health score treated a missing weight-for-height z-score as 0
+  (worth +20 points). Here a missing z-score earns 0 points for that
+  component.
+
+The original pregnancy page also printed numeric “child outcome
+predictions” (expected birth-weight ranges, stunting/preterm “risks”).
+Those are **not ported**: the checklist ends in care actions, never in a
+predicted outcome for the baby. Likewise the untouched-checklist case
+records nothing — the pregnancy section only saves when the worker
+actually fills it in.
+
+## From the wider PoshanDrishti system (not embedded in this offline prototype)
+
+These parts of the original system depend on a server, trained ML models,
+third-party network services, or user accounts, so they are not in this
+file and are not simulated:
+
+- **Photo anaemia scan** (`ScanPage.jsx` + `/api/vision-analysis`, Keras
+  CNN `anemia_model.h5` on conjunctiva photos, with a red-channel
+  colour fallback) — this prototype's founding rule is *no photo-based
+  haemoglobin estimation*; anaemia stays a clinical-sign triage ending in
+  referral for a measured Hb test.
+- **ML malnutrition “prediction”** (`/api/predict`, RandomForest
+  `ml_model.pkl`) — a server-trained classifier; this app classifies only
+  with published WHO rules that the worker can inspect.
+- **30/60/90-day risk forecasting** (`risk_engine.py`, `RiskPrediction.jsx`,
+  `models/risk_prediction/`) — forecasting a child's future SAM/MAM status
+  is a prediction claim this prototype does not make; its growth-velocity
+  idea survives only as the descriptive faltering prompt (“visit sooner,
+  counsel, re-weigh”).
+- **Accounts, server database and dashboards** (`UserRegistration`,
+  `FamilyEntry`, `DataEntry`, `Dashboard`, server `Segmentation` analytics,
+  `CommunityDashboard`, `ReportExport`/Excel) — this prototype is
+  account-free and keeps records only in the phone's browser storage; the
+  family view covers the per-family record, and the segmentation *scoring*
+  (above) was ported even though the server analytics pages were not.
+- **Hospital Finder** (`HospitalFinder.jsx`, OpenStreetMap Overpass API)
+  and **DietPlan location search** (Nominatim) — live network geocoding;
+  the diet plan instead asks the worker to pick the area type.
+- **SMS/WhatsApp alert dispatch** (`AlertSystem.jsx` server actions) — no
+  messages are sent by this app; its helpline strip and worker-confirmed
+  referral loop are the offline equivalents.
+- **Progress photo comparison** (`ProgressPage.jsx`) — photo storage and
+  comparison; excluded with all camera features. (Its local visit-history
+  idea is covered by this app's family record and trend chart.)
+- **`ARCHITECTURE_PLAN.md`** in the original repo describes a planned
+  React + FastAPI + MongoDB production architecture; the shipped original
+  code (React + Flask + SQLite) is what was ported from.
 
 ## Running it
 

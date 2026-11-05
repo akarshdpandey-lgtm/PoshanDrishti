@@ -127,6 +127,22 @@
   .duenow{color:var(--red);font-weight:700}
   .cascline{font-size:13px;color:var(--muted);margin-top:10px}
   .sibblock{border:1.5px dashed var(--line);border-radius:12px;padding:12px;margin:10px 0}
+  .telrow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .telbtn{flex:1;min-width:100px;text-align:center;background:var(--paper2,#FBF7F0);border:1.5px solid var(--line);border-radius:12px;padding:10px 6px;text-decoration:none;color:var(--ink)}
+  .telbtn b{display:block;font-size:20px;color:var(--accent-deep)}
+  .telbtn span{font-size:12.5px;color:var(--ink2)}
+  .faqbody{white-space:pre-line;font-size:15px;line-height:1.55;margin-top:8px}
+  .foodtag{display:inline-block;padding:3px 10px;border-radius:999px;background:#F3E9D8;border:1px solid var(--line);font-size:13px;margin:2px 3px 2px 0}
+  .lvlcard{display:block;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;cursor:pointer;background:#FFFDF8}
+  .lvlcard input{margin-right:8px}
+  .lvlcard .lt{font-weight:700}
+  .lvlcard .ld{display:block;font-size:13.5px;color:var(--ink2);margin-top:3px;line-height:1.45}
+  .mealrow{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .mealrow:last-child{border-bottom:none}
+  .mealrow .mt{flex:0 0 74px;font-weight:700;font-size:13.5px;color:var(--accent-deep)}
+  .mealrow .mm{flex:1;font-size:14.5px}
+  .mealrow .mn{display:block;font-size:12.5px;color:var(--muted)}
+  .nutdef{border-left:4px solid var(--amber,#C77D2A);background:#FFF9EE;border-radius:8px;padding:10px 12px;margin:10px 0}
 </style>
 </head>
 <body>
@@ -146,6 +162,7 @@
 
   <main id="view-home">
     <div class="btnrow"><button type="button" class="btn" id="btnNewVisit"></button></div>
+    <div class="btnrow"><button type="button" class="btn alt" id="btnHelp"><span data-i18n="lgHelpBtn"></span></button></div>
     <h2 style="font-size:20px;margin:18px 0 4px" data-i18n="savedFamilies"></h2>
     <div id="famList"></div>
     <div id="openPanel"></div>
@@ -199,6 +216,47 @@
           <div class="hint" data-i18n="hbHint"></div>
         </div>
       </div>
+      <div class="card hidden" id="pregCard">
+        <h3 data-i18n="lgPregTitle"></h3>
+        <p class="sub" data-i18n="lgPregSub"></p>
+        <div class="grid">
+          <div class="field"><label class="flabel" for="pgAnc" data-i18n="lgAncQ"></label><input type="number" id="pgAnc" min="0" max="20" step="1" inputmode="numeric"></div>
+          <div class="field"><label class="flabel" data-i18n="lgTetQ"></label><div class="seg">
+            <label><input type="radio" name="pgtet" value="yes"><span data-i18n="oedYes"></span></label>
+            <label><input type="radio" name="pgtet" value="no" checked><span data-i18n="oedNo"></span></label></div></div>
+        </div>
+        <div class="grid">
+          <div class="field"><label class="flabel" for="pgWt" data-i18n="lgMWtQ"></label><input type="number" id="pgWt" min="0" step="0.1" inputmode="decimal"></div>
+          <div class="field"><label class="flabel" for="pgHt" data-i18n="lgMHtQ"></label><input type="number" id="pgHt" min="0" step="0.1" inputmode="decimal"></div>
+        </div>
+        <div class="field"><label class="flabel" data-i18n="lgDietT"></label>
+          <label class="lvlcard"><input type="radio" name="pgdiet" value="low"><span class="lt" data-i18n="lgDietLow"></span><span class="ld" data-i18n="lgDietLowD"></span></label>
+          <label class="lvlcard"><input type="radio" name="pgdiet" value="medium"><span class="lt" data-i18n="lgDietMed"></span><span class="ld" data-i18n="lgDietMedD"></span></label>
+          <label class="lvlcard"><input type="radio" name="pgdiet" value="high"><span class="lt" data-i18n="lgDietHigh"></span><span class="ld" data-i18n="lgDietHighD"></span></label>
+        </div>
+        <div class="field"><label class="flabel" data-i18n="lgEconT"></label>
+          <label class="lvlcard"><input type="radio" name="pgecon" value="low"><span class="lt" data-i18n="lgEconLow"></span><span class="ld" data-i18n="lgEconLowD"></span></label>
+          <label class="lvlcard"><input type="radio" name="pgecon" value="medium"><span class="lt" data-i18n="lgEconMed"></span><span class="ld" data-i18n="lgEconMedD"></span></label>
+          <label class="lvlcard"><input type="radio" name="pgecon" value="high"><span class="lt" data-i18n="lgEconHigh"></span><span class="ld" data-i18n="lgEconHighD"></span></label>
+        </div>
+        <div class="grid">
+          <div class="field"><label class="flabel" data-i18n="lgIfaQ"></label><div class="seg">
+            <label><input type="radio" name="pgifa" value="regular"><span data-i18n="lgIfaReg"></span></label>
+            <label><input type="radio" name="pgifa" value="sometimes"><span data-i18n="lgIfaSome"></span></label>
+            <label><input type="radio" name="pgifa" value="no" checked><span data-i18n="oedNo"></span></label></div></div>
+          <div class="field"><label class="flabel" data-i18n="lgDiabQ"></label><div class="seg">
+            <label><input type="radio" name="pgdiab" value="yes"><span data-i18n="oedYes"></span></label>
+            <label><input type="radio" name="pgdiab" value="no" checked><span data-i18n="oedNo"></span></label></div></div>
+        </div>
+        <div class="field"><label class="flabel" data-i18n="lgAreaT"></label><div class="seg">
+          <label><input type="radio" name="pgarea" value="rural" checked><span data-i18n="lgAreaRural"></span></label>
+          <label><input type="radio" name="pgarea" value="urban"><span data-i18n="lgAreaUrban"></span></label>
+          <label><input type="radio" name="pgarea" value="tribal"><span data-i18n="lgAreaTribal"></span></label></div></div>
+        <div class="field"><label class="flabel" data-i18n="lgWaterQ"></label><div class="seg">
+          <label><input type="radio" name="pgwater" value="safe" checked><span data-i18n="lgWaterSafe"></span></label>
+          <label><input type="radio" name="pgwater" value="unsafe"><span data-i18n="lgWaterUnsafe"></span></label></div></div>
+        <p class="smalldisc" data-i18n="lgPregNote"></p>
+      </div>
       <div id="childBlocks"></div>
       <div class="btnrow"><button type="button" class="btn ghost" id="btnAddChild"></button></div>
       <div class="btnrow"><button type="submit" class="btn" id="btnSaveVisit"></button></div>
@@ -225,6 +283,66 @@
 
   <main id="view-cascade" class="hidden">
     <div id="cascadeWrap"></div>
+  </main>
+
+  <main id="view-help" class="hidden">
+    <div class="btnrow"><button type="button" class="btn ghost" data-back="home">← <span data-i18n="back"></span></button></div>
+    <h2 style="font-size:22px" data-i18n="lgHelpTitle"></h2>
+    <p class="sub" data-i18n="lgHelpSub"></p>
+    <div class="card">
+      <h3 data-i18n="lgEmergTitle"></h3>
+      <div class="telrow">
+        <a class="telbtn" href="tel:108"><b>108</b><span data-i18n="lgTelAmb"></span></a>
+        <a class="telbtn" href="tel:102"><b>102</b><span data-i18n="lgTelMother"></span></a>
+        <a class="telbtn" href="tel:1098"><b>1098</b><span data-i18n="lgTelChild"></span></a>
+        <a class="telbtn" href="tel:104"><b>104</b><span data-i18n="lgTelHealth"></span></a>
+        <a class="telbtn" href="tel:112"><b>112</b><span data-i18n="lgTelEmerg"></span></a>
+      </div>
+      <p class="smalldisc" data-i18n="lgEmergNote"></p>
+    </div>
+    <div class="card">
+      <h3 data-i18n="lgFaqTitle"></h3>
+      <p class="sub" data-i18n="lgFaqSub"></p>
+      <div class="field"><input type="text" id="faqSearch" autocomplete="off"></div>
+      <div class="chips" id="faqChips"></div>
+      <div id="faqAnswer"></div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="lgSchemesTitle"></h3>
+      <div id="schemesBox"></div>
+    </div>
+    <p class="smalldisc" data-i18n="lgHelpFoot"></p>
+  </main>
+
+  <main id="view-hhunger" class="hidden">
+    <div class="btnrow"><button type="button" class="btn ghost" id="hhBack">← <span data-i18n="back"></span></button></div>
+    <h2 style="font-size:22px" id="hhTitle"></h2>
+    <p class="sub" data-i18n="lgHHSub"></p>
+    <div class="card">
+      <div class="field"><label class="flabel" data-i18n="lgDietT"></label>
+        <label class="lvlcard"><input type="radio" name="hhdiet" value="low"><span class="lt" data-i18n="lgDietLow"></span><span class="ld" data-i18n="lgDietLowD"></span></label>
+        <label class="lvlcard"><input type="radio" name="hhdiet" value="medium"><span class="lt" data-i18n="lgDietMed"></span><span class="ld" data-i18n="lgDietMedD"></span></label>
+        <label class="lvlcard"><input type="radio" name="hhdiet" value="high"><span class="lt" data-i18n="lgDietHigh"></span><span class="ld" data-i18n="lgDietHighD"></span></label>
+      </div>
+      <div class="field"><label class="flabel" data-i18n="lgEconT"></label>
+        <label class="lvlcard"><input type="radio" name="hhecon" value="low"><span class="lt" data-i18n="lgEconLow"></span><span class="ld" data-i18n="lgEconLowD"></span></label>
+        <label class="lvlcard"><input type="radio" name="hhecon" value="medium"><span class="lt" data-i18n="lgEconMed"></span><span class="ld" data-i18n="lgEconMedD"></span></label>
+        <label class="lvlcard"><input type="radio" name="hhecon" value="high"><span class="lt" data-i18n="lgEconHigh"></span><span class="ld" data-i18n="lgEconHighD"></span></label>
+      </div>
+      <div class="field"><label class="flabel" data-i18n="lgAreaT"></label><div class="seg">
+        <label><input type="radio" name="hharea" value="rural" checked><span data-i18n="lgAreaRural"></span></label>
+        <label><input type="radio" name="hharea" value="urban"><span data-i18n="lgAreaUrban"></span></label>
+        <label><input type="radio" name="hharea" value="tribal"><span data-i18n="lgAreaTribal"></span></label></div></div>
+      <div class="checkgroup">
+        <div class="glabel" data-i18n="lgHHSymTitle"></div>
+        <p class="gsub" data-i18n="lgHHSymSub"></p>
+        <div class="chips" id="hhSymChips"></div>
+      </div>
+      <p class="smalldisc" id="hhError" style="color:var(--red);font-weight:600"></p>
+      <div class="btnrow"><button type="button" class="btn" id="btnHHGo"><span data-i18n="lgHHGo"></span></button></div>
+      <div id="hhResult"></div>
+    </div>
+    <p class="smalldisc" data-i18n="lgHHFoot"></p>
   </main>
 
   <footer>
@@ -884,7 +1002,7 @@ PD.speak = function (text) {
 /* ---------- view switching ---------- */
 PD.show = function (name) {
   PD.state.view = name;
-  ["home", "visit", "results", "family", "cascade"].forEach(function (v) {
+  ["home", "visit", "results", "family", "cascade", "help", "hhunger"].forEach(function (v) {
     document.getElementById("view-" + v).classList.toggle("hidden", v !== name);
   });
   window.scrollTo(0, 0);
@@ -1245,6 +1363,7 @@ PD.submitVisit = function (ev) {
   };
   var mr = PD.assessMother({ ageYears: chk.ageYears, pregnant: chk.pregnant, pallor: chk.pallor, symptoms: chk.symptoms, risks: chk.risks, hb: chk.hb });
   chk.tier = mr.tier; chk.score = mr.score; chk.hbBand = mr.hbBand;
+  if (PD.extendMotherCheck) PD.extendMotherCheck(chk);
   fam.motherChecks.push(chk);
   var saved = [];
   parsed.forEach(function (r) {
@@ -1670,6 +1789,842 @@ document.addEventListener("change", function (ev) {
 PD.applyI18n();
 PD.renderHome();
 PD.show("home");
+</script>
+<script>
+"use strict";
+/* =====================================================================
+   Legacy integration — content and features ported from the original
+   PoshanDrishti system (Akarsh Pandey's earlier full-stack app:
+   React + Flask + ML services) into this offline prototype.
+   Everything here runs on-device: no network, no camera, no ML model.
+   Rule-based legacy logic is re-implemented transparently and labelled
+   as checklists / screening support, never as diagnosis or prediction.
+   ===================================================================== */
+Object.assign(PD.STR.en, {
+  lgHelpBtn: "💬 Saathi Help — answers, helplines & schemes",
+  lgHelpTitle: "Saathi Help",
+  lgHelpSub: "Quick answers from the original PoshanDrishti's ASHA Saathi knowledge base — works fully offline. Tap a topic, or type a question (for example: MUAC, SAM, diet, emergency).",
+  lgEmergTitle: "🚨 Emergency helplines (tap to call)",
+  lgTelAmb: "Ambulance", lgTelMother: "Mother & child", lgTelChild: "Child helpline", lgTelHealth: "Health helpline", lgTelEmerg: "All emergencies",
+  lgEmergNote: "Where to go: Anganwadi centre → PHC → CHC → District Hospital. SAM with complications → NRC (Nutrition Rehabilitation Centre).",
+  lgFaqTitle: "Ask Saathi",
+  lgFaqSub: "Tap a topic chip or type below — answers come from a fixed knowledge base stored in this app (ported from the original PoshanDrishti ASHA Saathi chatbot). It is general information, not medical advice for a specific child.",
+  lgFaqPh: "Type a question… (MUAC, SAM, anemia, diet, RUTF…)",
+  lgFaqNone: "No topic matches that word yet. Try: MUAC, SAM, MAM, z-score, edema, anemia, diet, RUTF, NRC, ICDS, breastfeeding, stunting, wasting, underweight, health score, emergency.",
+  lgSchemesTitle: "Government schemes & support",
+  lgHelpFoot: "Knowledge base and checklists ported from the original PoshanDrishti by Akarsh Pandey. Helpline numbers: 108 / 102 / 1098 / 104 / 112 (India).",
+  lgPregTitle: "Pregnancy care checklist (optional)",
+  lgPregSub: "From the original PoshanDrishti “Womb to World” module, as a transparent care checklist: it lists risk and protective factors to act on with the ANM — it does not predict the baby's outcome.",
+  lgAncQ: "ANC check-ups done so far", lgTetQ: "Td (tetanus) vaccine taken?",
+  lgMWtQ: "Mother's weight (kg, optional)", lgMHtQ: "Mother's height (cm, optional)",
+  lgDietT: "Usual diet quality",
+  lgDietLow: "Low", lgDietLowD: "Only 1–2 kinds of food — like only roti-dal or rice. Fruits, vegetables, milk, eggs very rarely or never. (Example: roti + dal + salt)",
+  lgDietMed: "Medium", lgDietMedD: "Roti, dal and vegetables daily, but fruits, milk, eggs or dry fruits only sometimes. (Example: roti + dal + sabzi daily, milk sometimes)",
+  lgDietHigh: "Good", lgDietHighD: "All food groups daily — grains, dal/protein, vegetables, fruits, milk/curd, egg/meat, sometimes dry fruits.",
+  lgEconT: "Family's economic situation",
+  lgEconLow: "Low", lgEconLowD: "Income very low; BPL card or government support needed; even daily food is difficult. (₹0–5,000/month)",
+  lgEconMed: "Medium", lgEconMedD: "Family manages but savings are low; good food is not always affordable. (₹5,000–15,000/month)",
+  lgEconHigh: "Good", lgEconHighD: "Income is enough for nutritious food and medical care when needed. (₹15,000+/month)",
+  lgIfaQ: "Taking IFA (iron) tablets?", lgIfaReg: "Regularly", lgIfaSome: "Sometimes",
+  lgDiabQ: "Diabetes (sugar) known?", lgWaterQ: "Drinking water", lgWaterSafe: "Safe / treated", lgWaterUnsafe: "Unsafe source",
+  lgAreaT: "Area type", lgAreaRural: "Rural", lgAreaUrban: "Urban", lgAreaTribal: "Tribal",
+  lgPregNote: "Only tick what you know. If a measured haemoglobin was entered above it is used here too; if not, this checklist simply skips the Hb point and says so.",
+  lgHHSub: "Hidden hunger means missing vitamins and minerals (micronutrients) even when the child eats enough quantity. This checklist — from the original PoshanDrishti Hidden Hunger module — combines the child's diet, family situation and visible signs into a simple risk checklist with foods that help. It is not a blood test.",
+  lgHHSymTitle: "Signs you can see (tick any that apply)",
+  lgHHSymSub: "Look at the child and ask the mother. Each group of signs points to nutrients that may be missing.",
+  lgHHGo: "See hidden hunger result",
+  lgHHFoot: "Checklist ported from the original PoshanDrishti. A high result means: counsel on the foods listed, link the family to ICDS supplementary nutrition, and refer to the PHC/ANM if signs persist — only a blood test can confirm a deficiency.",
+  lgHHNeedLevels: "Please choose the diet quality and the family's economic situation first.",
+  lgHHResultK: "HIDDEN HUNGER CHECK — ORIGINAL POSHANDRISHTI MODULE",
+  lgHHScoreLine: "Checklist score: {score} / 100",
+  lgHHLevelHigh: "Higher hidden-hunger risk — act this week", lgHHLevelMed: "Moderate hidden-hunger risk — counsel & review", lgHHLevelLow: "Lower hidden-hunger risk — keep up the varied diet",
+  lgHHCheckedLine: "Signs ticked: {n} of {total}.",
+  lgHHFoodsWord: "Foods that help", lgHHTipWord: "Tip",
+  lgNutIron: "Iron", lgNutVitA: "Vitamin A", lgNutCalD: "Calcium + Vitamin D", lgNutVitC: "Vitamin C", lgNutB12: "Vitamin B12 / Folate", lgNutZinc: "Zinc",
+  lgHHBtn: "🥦 Hidden hunger check",
+  lgHHistLine: "Hidden hunger ({date}): {level} — {score}/100",
+  lgHHLevelShortHigh: "Higher risk", lgHHLevelShortMed: "Moderate risk", lgHHLevelShortLow: "Lower risk",
+  lgPregResultK: "PREGNANCY CARE CHECKLIST — “WOMB TO WORLD” (ORIGINAL POSHANDRISHTI)",
+  lgPregHigh: "Higher care priority — discuss with ANM this week", lgPregMed: "Moderate care priority — complete the actions below", lgPregLow: "Lower care priority — continue routine care",
+  lgPregScoreLine: "Checklist score: {score} / 100 (a worklist score for follow-up priority — not a prediction)",
+  lgPregFactorsT: "Risk factors to act on", lgPregProtectT: "Protective factors", lgPregNone: "None recorded.",
+  lgPregHbMissing: "Haemoglobin not measured — the Hb point was skipped. Arrange a measured Hb test at the PHC.",
+  lgPregTetDue: "Td (tetanus) vaccine not taken — arrange it with the ANM.",
+  lgPregDietT: "Diet for this trimester", lgPregFocusW: "Focus", lgPregFoodsT: "Eat more of", lgPregAvoidT: "Avoid / limit",
+  lgPregRecsT: "Care actions", lgPregEmergT: "Danger signs — go to a facility at once if any appear",
+  pfHbSev: "Severe anaemia on measured Hb ({hb} g/dL)", pfHbMod: "Moderate anaemia on measured Hb ({hb} g/dL)", pfHbMild: "Mild anaemia on measured Hb ({hb} g/dL)", pfHbOk: "Measured Hb in the normal range ({hb} g/dL)",
+  pfBmiLow: "Underweight (BMI {bmi})", pfBmiHigh: "Obesity (BMI {bmi})", pfBmiOk: "BMI in the normal range ({bmi})",
+  pfAgeYoung: "Teenage pregnancy (age {age})", pfAgeOld: "Pregnancy after 35 (age {age})", pfAgeOk: "Age in the usual range ({age})",
+  pfAncLow: "Few ANC check-ups so far ({n})", pfAncOk: "Enough ANC check-ups ({n})",
+  pfDietLow: "Poor diet quality", pfDietOk: "Good diet", pfEconLow: "Low economic status", pfEconOk: "Economic situation is stable",
+  pfDiab: "Diabetes known", pfIfaNo: "Not taking IFA tablets", pfIfaOk: "Taking IFA tablets regularly",
+  pfWater: "Unsafe drinking water", pfTribal: "Tribal / remote area — facility is far, plan visits early",
+  lgDietResultK: "TODAY'S DIET PLAN — FROM THE ORIGINAL POSHANDRISHTI",
+  lgCalSam: "1500–1800 kcal/day", lgCalMam: "1200–1500 kcal/day", lgCalNorm: "1000–1200 kcal/day",
+  lgDietNoteSam: "A food guide to support care — SAM treatment itself (F-75/F-100/RUTF) is given at the NRC/facility as prescribed.",
+  lgDietNoteGen: "Built on-device from the original PoshanDrishti food list, favouring foods common in this area type. Adjust to what the family actually has.",
+  lgTm6: "6:00 AM", lgTm7: "7:00 AM", lgTm730: "7:30 AM", lgTm8: "8:00 AM", lgTm10: "10:00 AM", lgTm12: "12:00 PM", lgTm1230: "12:30 PM", lgTm14: "2:00 PM", lgTm15: "3:00 PM", lgTm16: "4:00 PM", lgTm18: "6:00 PM", lgTm1830: "6:30 PM", lgTm1930: "7:30 PM", lgTm20: "8:00 PM", lgTm2030: "8:30 PM",
+  lgNtEnergy: "Energy start", lgNtBreakfast: "Breakfast", lgNtSnack: "Snack", lgNtMain: "Main meal", lgNtProtein: "Protein", lgNtLight: "Light", lgNtDinner: "Dinner", lgNtBed: "Before sleep", lgNtLunch: "Lunch", lgNtEvening: "Evening",
+  lgTipSam1: "🚨 Feed 8 times a day", lgTipSam2: "🏥 Go to the NRC without delay", lgTipSam3: "💊 Vitamin A + iron + zinc only as prescribed", lgTipSam4: "🍯 Add ghee/jaggery to every meal for energy",
+  lgTipMam1: "⚠️ Feed 6 times a day", lgTipMam2: "🥜 Give dry fruits / peanut foods daily", lgTipMam3: "👨‍⚕️ Review with the doctor/ANM every 2 weeks",
+  lgTipNorm1: "✅ Give a balanced diet", lgTipNorm2: "🥗 Give a variety of foods",
+  lgScoreLine: "Progress score {score}/100",
+  lgSegOnTrack: "On track", lgSegImproving: "Improving", lgSegNeeds: "Needs attention",
+  lgStaleNote: "No visit recorded for {days} days — a follow-up visit is due.",
+  lgScoreNote: "Progress score from the original PoshanDrishti (severity + MUAC + weight-for-height + swelling). A simple worklist score — not clinically validated.",
+  lgActionWord: "Next step",
+  lgPregHistLine: "Pregnancy care ({date}): {level}"
+});
+/* LG-A-END */
+</script>
+<script>
+"use strict";
+Object.assign(PD.STR.hi, {
+  lgHelpBtn: "💬 साथी सहायता — जवाब, हेल्पलाइन व योजनाएं",
+  lgHelpTitle: "साथी सहायता",
+  lgHelpSub: "मूल PoshanDrishti के आशा साथी ज्ञान-कोष से त्वरित जवाब — पूरी तरह ऑफ़लाइन। कोई विषय छूएं, या सवाल लिखें (जैसे: MUAC, SAM, आहार, आपातकाल)।",
+  lgEmergTitle: "🚨 आपातकालीन हेल्पलाइन (छूकर कॉल करें)",
+  lgTelAmb: "एम्बुलेंस", lgTelMother: "माँ व शिशु", lgTelChild: "चाइल्ड हेल्पलाइन", lgTelHealth: "स्वास्थ्य हेल्पलाइन", lgTelEmerg: "सभी आपात स्थितियाँ",
+  lgEmergNote: "कहाँ जाएं: आंगनवाड़ी केंद्र → PHC → CHC → जिला अस्पताल। जटिलताओं वाला SAM → NRC (पोषण पुनर्वास केंद्र)।",
+  lgFaqTitle: "साथी से पूछें",
+  lgFaqSub: "विषय वाला चिप छूएं या नीचे लिखें — जवाब इस ऐप में ही रखे निश्चित ज्ञान-कोष से आते हैं (मूल PoshanDrishti के आशा साथी चैटबॉट से लिए गए)। यह सामान्य जानकारी है, किसी विशेष बच्चे के लिए चिकित्सा सलाह नहीं।",
+  lgFaqPh: "अपना सवाल लिखें… (MUAC, SAM, एनीमिया, आहार, RUTF…)",
+  lgFaqNone: "उस शब्द से कोई विषय नहीं मिला। ये लिखकर देखें: MUAC, SAM, MAM, z-score, सूजन, एनीमिया, आहार, RUTF, NRC, ICDS, स्तनपान, बौनापन, दुबलापन, कम वज़न, स्वास्थ्य स्कोर, आपातकाल।",
+  lgSchemesTitle: "सरकारी योजनाएं व सहायता",
+  lgHelpFoot: "ज्ञान-कोष व जांच-सूचियाँ मूल PoshanDrishti (आकर्ष पांडेय) से ली गईं। हेल्पलाइन नंबर: 108 / 102 / 1098 / 104 / 112 (भारत)।",
+  lgPregTitle: "गर्भावस्था देखभाल जांच-सूची (वैकल्पिक)",
+  lgPregSub: "मूल PoshanDrishti के “Womb to World” मॉड्यूल से, एक पारदर्शी देखभाल जांच-सूची के रूप में: यह ANM के साथ काम करने हेतु जोखिम व सुरक्षा कारक सूचीबद्ध करती है — यह शिशु के परिणाम की भविष्यवाणी नहीं करती।",
+  lgAncQ: "अब तक हुई ANC जांचें", lgTetQ: "Td (टिटनेस) टीका लगा?",
+  lgMWtQ: "माँ का वज़न (किग्रा, वैकल्पिक)", lgMHtQ: "माँ की लंबाई (सेमी, वैकल्पिक)",
+  lgDietT: "सामान्य आहार की गुणवत्ता",
+  lgDietLow: "कम", lgDietLowD: "सिर्फ एक-दो तरह का खाना — जैसे सिर्फ रोटी-दाल या चावल। फल, सब्ज़ी, दूध, अंडा बहुत कम या बिल्कुल नहीं। (उदाहरण: रोटी + दाल + नमक)",
+  lgDietMed: "मध्यम", lgDietMedD: "रोटी, दाल, सब्ज़ी रोज़ मिलती है, लेकिन फल, दूध, अंडा, ड्राई फ्रूट्स कभी-कभी ही मिलते हैं। (उदाहरण: रोटी + दाल + सब्ज़ी रोज़, दूध कभी-कभी)",
+  lgDietHigh: "अच्छा", lgDietHighD: "सभी food groups रोज़ मिलते हैं — अनाज, दाल/प्रोटीन, सब्ज़ी, फल, दूध/दही, अंडा/मांस और कभी-कभी ड्राई फ्रूट्स।",
+  lgEconT: "परिवार की आर्थिक स्थिति",
+  lgEconLow: "निम्न", lgEconLowD: "परिवार की आमदनी बहुत कम है; BPL card है या सरकारी मदद ज़रूरी है; रोज़ के खाने की भी दिक्कत होती है। (₹0–5,000/महीना)",
+  lgEconMed: "मध्यम", lgEconMedD: "परिवार का गुज़ारा चल जाता है लेकिन बचत कम है; अच्छा खाना हमेशा afford नहीं होता। (₹5,000–15,000/महीना)",
+  lgEconHigh: "अच्छा", lgEconHighD: "आमदनी अच्छी है; पौष्टिक खाना व ज़रूरत पड़ने पर इलाज afford कर सकते हैं। (₹15,000+/महीना)",
+  lgIfaQ: "IFA (आयरन) गोलियाँ ले रही हैं?", lgIfaReg: "नियमित रूप से", lgIfaSome: "कभी-कभी",
+  lgDiabQ: "मधुमेह (शुगर) है?", lgWaterQ: "पीने का पानी", lgWaterSafe: "सुरक्षित / उपचारित", lgWaterUnsafe: "असुरक्षित स्रोत",
+  lgAreaT: "क्षेत्र का प्रकार", lgAreaRural: "ग्रामीण", lgAreaUrban: "शहरी", lgAreaTribal: "आदिवासी",
+  lgPregNote: "केवल वही भरें जो पता हो। अगर ऊपर मापा हुआ हीमोग्लोबिन भरा गया है तो वह यहाँ भी उपयोग होगा; नहीं भरा तो यह जांच-सूची Hb वाला अंक छोड़ देगी और ऐसा लिखकर बताएगी।",
+  lgHHSub: "छिपी भूख का मतलब है विटामिन व खनिजों (सूक्ष्म पोषक तत्वों) की कमी — भले ही बच्चा मात्रा में पर्याप्त खाता हो। यह जांच-सूची — मूल PoshanDrishti के Hidden Hunger मॉड्यूल से — बच्चे के आहार, परिवार की स्थिति व दिखने वाले लक्षणों को मिलाकर एक सरल जोखिम सूची बनाती है और मदद करने वाले खाद्य पदार्थ बताती है। यह खून की जांच नहीं है।",
+  lgHHSymTitle: "दिखने वाले लक्षण (जो लागू हों, टिक करें)",
+  lgHHSymSub: "बच्चे को देखें और माँ से पूछें। लक्षणों का हर समूह उन पोषक तत्वों की ओर इशारा करता है जो कम हो सकते हैं।",
+  lgHHGo: "छिपी भूख का परिणाम देखें",
+  lgHHFoot: "जांच-सूची मूल PoshanDrishti से ली गई। ऊँचा परिणाम हो तो: बताए गए खाद्य पदार्थों पर परामर्श दें, परिवार को ICDS पूरक पोषण से जोड़ें, और लक्षण बने रहें तो PHC/ANM को भेजें — कमी की पुष्टि केवल खून की जांच से होती है।",
+  lgHHNeedLevels: "कृपया पहले आहार की गुणवत्ता व परिवार की आर्थिक स्थिति चुनें।",
+  lgHHResultK: "छिपी भूख जांच — मूल POSHANDRISHTI मॉड्यूल",
+  lgHHScoreLine: "जांच-सूची स्कोर: {score} / 100",
+  lgHHLevelHigh: "छिपी भूख का उच्च जोखिम — इस सप्ताह कदम उठाएं", lgHHLevelMed: "छिपी भूख का मध्यम जोखिम — परामर्श दें व समीक्षा करें", lgHHLevelLow: "छिपी भूख का कम जोखिम — विविध आहार जारी रखें",
+  lgHHCheckedLine: "टिक किए गए लक्षण: {total} में से {n}।",
+  lgHHFoodsWord: "मदद करने वाले खाद्य पदार्थ", lgHHTipWord: "सुझाव",
+  lgNutIron: "आयरन (Iron)", lgNutVitA: "विटामिन A", lgNutCalD: "कैल्शियम + विटामिन D", lgNutVitC: "विटामिन C", lgNutB12: "विटामिन B12 / फोलेट", lgNutZinc: "जिंक (Zinc)",
+  lgHHBtn: "🥦 छिपी भूख जांच",
+  lgHHistLine: "छिपी भूख ({date}): {level} — {score}/100",
+  lgHHLevelShortHigh: "उच्च जोखिम", lgHHLevelShortMed: "मध्यम जोखिम", lgHHLevelShortLow: "कम जोखिम",
+  lgPregResultK: "गर्भावस्था देखभाल जांच-सूची — “WOMB TO WORLD” (मूल POSHANDRISHTI)",
+  lgPregHigh: "उच्च देखभाल प्राथमिकता — इस सप्ताह ANM से चर्चा करें", lgPregMed: "मध्यम देखभाल प्राथमिकता — नीचे के कदम पूरे करें", lgPregLow: "कम देखभाल प्राथमिकता — नियमित देखभाल जारी रखें",
+  lgPregScoreLine: "जांच-सूची स्कोर: {score} / 100 (फ़ॉलो-अप प्राथमिकता के लिए कार्य-सूची स्कोर — भविष्यवाणी नहीं)",
+  lgPregFactorsT: "कार्रवाई योग्य जोखिम कारक", lgPregProtectT: "सुरक्षा कारक", lgPregNone: "कोई दर्ज नहीं।",
+  lgPregHbMissing: "हीमोग्लोबिन मापा नहीं गया — Hb वाला अंक छोड़ दिया गया। PHC पर मापा हुआ Hb परीक्षण करवाएं।",
+  lgPregTetDue: "Td (टिटनेस) टीका नहीं लगा — ANM से लगवाएं।",
+  lgPregDietT: "इस तिमाही का आहार", lgPregFocusW: "ध्यान", lgPregFoodsT: "ये अधिक खाएं", lgPregAvoidT: "परहेज़ / सीमित करें",
+  lgPregRecsT: "देखभाल के कदम", lgPregEmergT: "ख़तरे के संकेत — कोई भी दिखे तो तुरंत सुविधा केंद्र जाएं",
+  pfHbSev: "मापे Hb पर गंभीर एनीमिया ({hb} g/dL)", pfHbMod: "मापे Hb पर मध्यम एनीमिया ({hb} g/dL)", pfHbMild: "मापे Hb पर हल्का एनीमिया ({hb} g/dL)", pfHbOk: "मापा Hb सामान्य सीमा में ({hb} g/dL)",
+  pfBmiLow: "कम वज़न (BMI {bmi})", pfBmiHigh: "मोटापा (BMI {bmi})", pfBmiOk: "BMI सामान्य सीमा में ({bmi})",
+  pfAgeYoung: "किशोर गर्भावस्था (उम्र {age})", pfAgeOld: "35 के बाद गर्भावस्था (उम्र {age})", pfAgeOk: "उम्र सामान्य सीमा में ({age})",
+  pfAncLow: "अब तक कम ANC जांचें ({n})", pfAncOk: "पर्याप्त ANC जांचें ({n})",
+  pfDietLow: "खराब आहार गुणवत्ता", pfDietOk: "अच्छा आहार", pfEconLow: "निम्न आर्थिक स्थिति", pfEconOk: "आर्थिक स्थिति स्थिर है",
+  pfDiab: "मधुमेह ज्ञात है", pfIfaNo: "IFA गोलियाँ नहीं ले रहीं", pfIfaOk: "IFA गोलियाँ नियमित ले रही हैं",
+  pfWater: "असुरक्षित पीने का पानी", pfTribal: "आदिवासी / दूरस्थ क्षेत्र — सुविधा केंद्र दूर है, दौरे पहले से तय करें",
+  lgDietResultK: "आज की आहार योजना — मूल POSHANDRISHTI से",
+  lgCalSam: "1500–1800 कैलोरी/दिन", lgCalMam: "1200–1500 कैलोरी/दिन", lgCalNorm: "1000–1200 कैलोरी/दिन",
+  lgDietNoteSam: "देखभाल में सहायक खाद्य मार्गदर्शिका — SAM का उपचार (F-75/F-100/RUTF) NRC/सुविधा केंद्र पर निर्धारित अनुसार ही दिया जाता है।",
+  lgDietNoteGen: "मूल PoshanDrishti की खाद्य सूची से इसी फ़ोन पर बनाई गई, इस क्षेत्र-प्रकार के सामान्य खाद्य पदार्थों को प्राथमिकता देकर। परिवार के पास जो उपलब्ध है, उसी के अनुसार ढालें।",
+  lgTm6: "सुबह 6:00", lgTm7: "सुबह 7:00", lgTm730: "सुबह 7:30", lgTm8: "सुबह 8:00", lgTm10: "सुबह 10:00", lgTm12: "दोपहर 12:00", lgTm1230: "दोपहर 12:30", lgTm14: "दोपहर 2:00", lgTm15: "दोपहर 3:00", lgTm16: "शाम 4:00", lgTm18: "शाम 6:00", lgTm1830: "शाम 6:30", lgTm1930: "शाम 7:30", lgTm20: "रात 8:00", lgTm2030: "रात 8:30",
+  lgNtEnergy: "ऊर्जा शुरुआत", lgNtBreakfast: "नाश्ता", lgNtSnack: "स्नैक", lgNtMain: "मुख्य भोजन", lgNtProtein: "प्रोटीन", lgNtLight: "हल्का", lgNtDinner: "रात का खाना", lgNtBed: "सोने से पहले", lgNtLunch: "दोपहर का खाना", lgNtEvening: "शाम",
+  lgTipSam1: "🚨 दिन में 8 बार खिलाएं", lgTipSam2: "🏥 बिना देर किए NRC जाएं", lgTipSam3: "💊 Vitamin A + आयरन + जिंक केवल निर्धारित अनुसार दें", lgTipSam4: "🍯 ऊर्जा के लिए हर खाने में घी/गुड़ मिलाएं",
+  lgTipMam1: "⚠️ दिन में 6 बार खिलाएं", lgTipMam2: "🥜 रोज़ ड्राई फ्रूट्स / मूंगफली वाले खाद्य दें", lgTipMam3: "👨‍⚕️ हर 2 हफ्ते डॉक्टर/ANM से समीक्षा करें",
+  lgTipNorm1: "✅ संतुलित भोजन दें", lgTipNorm2: "🥗 विविध खाना दें",
+  lgScoreLine: "प्रगति स्कोर {score}/100",
+  lgSegOnTrack: "सही दिशा में", lgSegImproving: "सुधार हो रहा है", lgSegNeeds: "ध्यान आवश्यक",
+  lgStaleNote: "{days} दिनों से कोई दौरा दर्ज नहीं — फ़ॉलो-अप दौरा देय है।",
+  lgScoreNote: "प्रगति स्कोर मूल PoshanDrishti से (गंभीरता + MUAC + वज़न-लंबाई अनुपात + सूजन)। एक सरल कार्य-सूची स्कोर — चिकित्सकीय रूप से मान्य नहीं।",
+  lgActionWord: "अगला कदम",
+  lgPregHistLine: "गर्भावस्था देखभाल ({date}): {level}"
+});
+/* LG-B-END */
+</script>
+<script>
+"use strict";
+/* ---- Food database, ported from the original PoshanDrishti DietPlan
+   module (common foods with kcal/100g and tags, urban extras, and the
+   area-priority lists used to order them). [name EN, name HI, kcal, tags] */
+PD.FOODS = [
+  ["Wheat", "गेहूँ", 340, "grain"], ["Rice", "चावल", 350, "grain"], ["Dal", "दाल", 340, "protein"],
+  ["Milk", "दूध", 60, "protein,calcium"], ["Egg", "अंडा", 155, "protein"], ["Banana", "केला", 89, "fruit"],
+  ["Carrot", "गाजर", 41, "veg,vitamin-a"], ["Spinach", "पालक", 23, "veg,iron"], ["Sweet Potato", "शकरकंद", 86, "veg,energy"],
+  ["Peanuts", "मूंगफली", 567, "fat,protein"], ["Potato", "आलू", 77, "veg,energy"], ["Ghee", "घी", 900, "fat"],
+  ["Jaggery", "गुड़", 383, "iron,energy"], ["Curd", "दही", 61, "protein,calcium"], ["Maize", "मक्का", 365, "grain"],
+  ["Tomato", "टमाटर", 18, "veg,vitamin-c"], ["Chickpea", "चना", 364, "protein"], ["Ragi", "रागी", 336, "grain,calcium"],
+  ["Lemon", "नींबू", 29, "fruit,vitamin-c"], ["Orange", "संतरा", 47, "fruit,vitamin-c"], ["Apple", "सेब", 52, "fruit"],
+  ["Paneer", "पनीर", 265, "protein,calcium"], ["Fish", "मछली", 206, "protein"], ["Chicken", "चिकन", 239, "protein"],
+  ["Soybean", "सोयाबीन", 446, "protein"], ["Sesame", "तिल", 573, "calcium,fat"], ["Guava", "अमरूद", 68, "fruit,vitamin-c"],
+  ["Mango", "आम", 60, "fruit,vitamin-a"], ["Fenugreek", "मेथी", 49, "veg,iron"], ["Mustard Greens", "सरसों साग", 27, "veg"],
+  ["Almonds", "बादाम", 579, "fat,protein,u"], ["Cashew", "काजू", 553, "fat,u"], ["Walnuts", "अखरोट", 654, "fat,u"],
+  ["Raisins", "किशमिश", 299, "energy,u"], ["Oats", "ओट्स", 389, "grain,u"], ["Bread", "ब्रेड", 265, "grain,u"],
+  ["Khichdi", "खिचड़ी", null, "grain"], ["Roti", "रोटी", null, "grain"], ["Porridge (Daliya)", "दलिया", null, "grain"],
+  ["Biscuits", "बिस्कुट", null, "energy"], ["Milk + Turmeric", "दूध + हल्दी", null, "protein"], ["Sattu", "सत्तू", null, "protein"]
+];
+PD.FOOD_AREA = {
+  rural: ["Milk", "Ghee", "Jaggery", "Maize", "Bajra", "Sattu", "Curd"],
+  urban: ["Oats", "Bread", "Paneer", "Almonds", "Cashew", "Apple", "Milk"],
+  tribal: ["Kodo Millet", "Little Millet", "Mahua", "Wild Greens", "Bamboo Shoot", "Wild Honey"]
+};
+/* ---- ASHA Saathi knowledge base, ported from the original
+   PoshanDrishti Chatbot (a fixed on-device knowledge base — no AI,
+   no network). Wording checked against this app's rules: MUAC bands
+   are the WHO bands the app uses; the anaemia bands are labelled as
+   children's / pregnancy bands, and only a blood test measures Hb. */
+PD.FAQ = [
+  { id: "muac", kw: ["muac", "mid upper arm", "बाजू", "परिधि"],
+    t: { en: "MUAC — measuring the arm", hi: "MUAC — बाजू की माप" },
+    b: { en: "MUAC = Mid-Upper Arm Circumference.\n\nHow to measure:\n1. Bend the left arm 90°.\n2. Find the midpoint between shoulder and elbow.\n3. Wrap the tape snugly, not tight.\n\nWHO bands (6–59 months):\n• 12.5 cm or more = Normal\n• 11.5 to below 12.5 cm = MAM\n• Below 11.5 cm = SAM",
+         hi: "MUAC = Mid-Upper Arm Circumference (बाजू की परिधि)।\n\nकैसे मापें:\n1. बायाँ बाजू 90° पर मोड़ें।\n2. कंधे–कोहनी का मध्य बिंदु खोजें।\n3. Tape बिना कसे लपेटें।\n\nWHO मानक (6–59 महीने):\n• 12.5 cm या अधिक = Normal\n• 11.5 से 12.5 cm से कम = MAM\n• 11.5 cm से कम = SAM" } },
+  { id: "sam", kw: ["sam", "severe acute", "गंभीर"],
+    t: { en: "SAM — severe acute malnutrition", hi: "SAM — गंभीर तीव्र कुपोषण" },
+    b: { en: "SAM is present when any one of these is true:\n• MUAC below 11.5 cm\n• Weight-for-height z-score below −3\n• Swelling of both feet (bilateral oedema)\n\nSigns: very thin, loose skin, poor appetite, repeated illness.\n\nAction: refer the same day to the NRC/facility. Treatment there (F-75/F-100, RUTF, medicines) is given only as prescribed — this app does not prescribe.",
+         hi: "SAM तब होता है जब इनमें से कोई एक हो:\n• MUAC 11.5 cm से कम\n• Weight-for-Height Z-score −3 से कम\n• दोनों पैरों में सूजन (Bilateral Edema)\n\nलक्षण: बहुत दुबला-पतला, त्वचा सिकुड़ी हुई, भूख न लगना, बार-बार बीमार पड़ना।\n\nकार्रवाई: उसी दिन NRC/सुविधा केंद्र भेजें। वहाँ का उपचार (F-75/F-100, RUTF, दवाएं) केवल निर्धारित अनुसार दिया जाता है — यह ऐप दवा निर्धारित नहीं करता।" } },
+  { id: "mam", kw: ["mam", "moderate acute", "मध्यम"],
+    t: { en: "MAM — moderate acute malnutrition", hi: "MAM — मध्यम तीव्र कुपोषण" },
+    b: { en: "MAM is present when:\n• MUAC 11.5 to below 12.5 cm, or\n• Weight-for-height z-score −3 to below −2\n\nSigns: weight below normal, some thinness, weakness.\n\nAction: start supplementary feeding (ICDS/Anganwadi), iron + folic acid as per programme, protein-rich local foods, and re-check every 2 weeks. Link the child to the Anganwadi centre.",
+         hi: "MAM तब होता है जब:\n• MUAC 11.5 से 12.5 cm से कम, या\n• Weight-for-Height Z-score −3 से −2 से कम\n\nलक्षण: सामान्य से कम वज़न, थोड़ा दुबलापन, कमज़ोरी।\n\nकार्रवाई: पूरक आहार (ICDS/आंगनवाड़ी) शुरू करें, कार्यक्रम अनुसार Iron + Folic Acid, प्रोटीन-युक्त स्थानीय भोजन, और हर 2 हफ्ते जांच करें। बच्चे को आंगनवाड़ी केंद्र से जोड़ें।" } },
+  { id: "zscore", kw: ["z score", "z-score", "zscore", "जेड स्कोर"],
+    t: { en: "Z-scores — what they mean", hi: "Z-Score — क्या मतलब है" },
+    b: { en: "A z-score compares the child with the WHO growth reference of the same age and sex.\n\n• Weight-for-age (WAZ): low = underweight\n• Height-for-age (HAZ): low = stunting\n• Weight-for-height (WHZ): low = wasting — the key score for acute malnutrition\n\nBands: above −1 normal · −1 to −2 mild · −2 to −3 moderate · below −3 severe.\n\nThis app computes z-scores from the WHO LMS tables (the same published tables used by WHO Anthro).",
+         hi: "Z-Score बच्चे की तुलना उसी उम्र व लिंग के WHO growth reference से करता है।\n\n• Weight-for-Age (WAZ): कम = कम वज़न (Underweight)\n• Height-for-Age (HAZ): कम = बौनापन (Stunting)\n• Weight-for-Height (WHZ): कम = दुबलापन (Wasting) — तीव्र कुपोषण के लिए सबसे महत्वपूर्ण\n\nश्रेणियाँ: −1 से ऊपर सामान्य · −1 से −2 हल्का · −2 से −3 मध्यम · −3 से नीचे गंभीर।\n\nयह ऐप z-score WHO LMS तालिकाओं से निकालता है (वही प्रकाशित तालिकाएं जो WHO Anthro उपयोग करता है)।" } },
+  { id: "edema", kw: ["edema", "oedema", "सूजन", "शोथ", "swelling"],
+    t: { en: "Oedema — swelling of both feet", hi: "Edema — दोनों पैरों की सूजन" },
+    b: { en: "Nutritional oedema = swelling from fluid collecting in the body.\n\nGrading (WHO):\n+ both feet · ++ feet + hands · +++ whole body + face\n\nHow to check: press the shin with the thumb for 3 seconds; a pit that stays = oedema.\n\nImportant: a child with bilateral oedema is treated as SAM whatever the MUAC shows.",
+         hi: "Nutritional Edema = शरीर में पानी जमा होने से सूजन।\n\nGrading (WHO):\n+ दोनों पैर · ++ पैर + हाथ · +++ पूरा शरीर + चेहरा\n\nकैसे check करें: पिंडली पर 3 सेकंड अंगूठे से दबाएं; छोड़ने पर गड्ढा बने = Edema।\n\nमहत्वपूर्ण: Bilateral Edema वाले बच्चे को MUAC चाहे कुछ भी हो, SAM माना जाता है!" } },
+  { id: "anemia", kw: ["anemia", "anaemia", "खून की कमी", "रक्ताल्पता", "hemoglobin", "haemoglobin", "hb"],
+    t: { en: "Anaemia — low haemoglobin", hi: "Anemia — खून की कमी" },
+    b: { en: "Anaemia = too little haemoglobin (Hb) in the blood. Only a blood test can measure Hb — pallor and symptoms cannot.\n\nWHO cut-offs (anaemia starts below):\n• Children 6–59 months and pregnant women: 11 g/dL\n• Other women: 12 g/dL\nFor children/pregnancy: 10–10.9 mild · 7–9.9 moderate · below 7 severe.\n\nSigns: pale eyes/tongue/nails, tiredness, fast breathing, dizziness.\n\nHelp: IFA tablets as per programme, iron-rich foods (spinach, jaggery, beetroot, egg), vitamin C foods with them (they raise iron absorption), and deworming as per programme.",
+         hi: "Anemia = खून में Hemoglobin (Hb) की कमी। Hb केवल खून की जांच से मापा जा सकता है — पीलापन व लक्षणों से नहीं।\n\nWHO कट-ऑफ़ (इससे नीचे = एनीमिया):\n• 6–59 महीने के बच्चे व गर्भवती महिलाएं: 11 g/dL\n• अन्य महिलाएं: 12 g/dL\nबच्चों/गर्भावस्था के लिए: 10–10.9 हल्का · 7–9.9 मध्यम · 7 से नीचे गंभीर।\n\nलक्षण: पीली आँखें/जीभ/नाखून, थकान/कमज़ोरी, तेज़ साँस, चक्कर।\n\nमदद: कार्यक्रम अनुसार IFA गोली, आयरन-युक्त भोजन (पालक, गुड़, चुकंदर, अंडा), साथ में Vitamin C वाले खाद्य (आयरन का absorption बढ़ता है), और कार्यक्रम अनुसार कृमिनाशक दवा।" } },
+  { id: "stunting", kw: ["stunting", "बौनापन", "छोटा कद", "height kam"],
+    t: { en: "Stunting — height too low for age", hi: "Stunting — बौनापन" },
+    b: { en: "Stunting = height-for-age z-score below −2: the child's height is low for their age.\n\nBands: −2 to −3 moderate · below −3 severe.\n\nCauses: long-term undernutrition, repeated illness, undernutrition in pregnancy.\n\nPrevention: the first 1000 days matter most — exclusive breastfeeding for 6 months, then a varied diet, and full immunisation.",
+         hi: "Stunting = Height-for-Age Z-score −2 से कम: बच्चे की ऊंचाई उम्र के हिसाब से कम है।\n\nश्रेणियाँ: −2 से −3 मध्यम · −3 से नीचे गंभीर।\n\nकारण: लंबे समय तक कुपोषण, बार-बार बीमारी, गर्भावस्था में माँ का कुपोषण।\n\nरोकथाम: पहले 1000 दिन सबसे महत्वपूर्ण — 6 महीने तक केवल स्तनपान, फिर विविध पौष्टिक आहार, और पूरा टीकाकरण।" } },
+  { id: "wasting", kw: ["wasting", "दुबलापन", "patla", "weight kam"],
+    t: { en: "Wasting — weight too low for height", hi: "Wasting — दुबलापन" },
+    b: { en: "Wasting = weight-for-height z-score below −2: the child's weight is low for their height.\n\nBands: −2 to −3 moderate (MAM) · below −3 severe (SAM).\n\nCauses: sudden food shortage, illness (diarrhoea, TB, etc.), stopping breastfeeding too early.\n\nHelp: high-calorie foods, frequent feeding (6–8 times a day), RUTF/RUSF as per programme, ORS if there is diarrhoea.",
+         hi: "Wasting = Weight-for-Height Z-score −2 से कम: बच्चे का वज़न ऊंचाई के हिसाब से कम है।\n\nश्रेणियाँ: −2 से −3 मध्यम (MAM) · −3 से नीचे गंभीर (SAM)।\n\nकारण: अचानक भोजन की कमी, बीमारी (दस्त, TB आदि), स्तनपान जल्दी बंद करना।\n\nमदद: High calorie foods, बार-बार खिलाना (दिन में 6–8 बार), कार्यक्रम अनुसार RUTF/RUSF, दस्त हो तो ORS।" } },
+  { id: "underweight", kw: ["underweight", "कम वजन", "vajan kam", "कम वज़न"],
+    t: { en: "Underweight — weight too low for age", hi: "Underweight — कम वज़न" },
+    b: { en: "Underweight = weight-for-age z-score below −2: the child's weight is low for their age. About a third of Indian children under five are underweight (NFHS).\n\nHelp: calorie-dense foods (ghee, peanuts, jaggery), feed 5–6 times a day, milk/egg/dal daily, and supplements only as per programme.",
+         hi: "Underweight = Weight-for-Age Z-score −2 से कम: बच्चे का वज़न उम्र के हिसाब से कम है। भारत में पाँच साल से छोटे लगभग एक-तिहाई बच्चे कम वज़न के हैं (NFHS)।\n\nमदद: Calorie-dense foods (घी, मूंगफली, गुड़), दिन में 5–6 बार खिलाएं, दूध/अंडा/दाल रोज़, और पूरक केवल कार्यक्रम अनुसार।" } },
+  { id: "diet", kw: ["diet", "khana", "food", "भोजन", "आहार", "nutrition", "पोषण"],
+    t: { en: "Diet for a malnourished child", hi: "कुपोषित बच्चे का आहार" },
+    b: { en: "SAM (8 feeds/day, alongside facility care): khichdi + ghee, daliya + milk + jaggery, peanut–jaggery chikki, banana + curd.\n\nMAM (6 feeds/day): milk + daliya, dal-rice + ghee, egg/paneer, fruit + dry fruits.\n\nRural foods that help: peanut + jaggery, sattu + milk, spinach + carrot, sweet potato.\nUrban extras: almonds (5–6/day), cashew (3–4), walnuts (2–3), dates (2–3), raisins (8–10).\n\nThe diet plan on each child's result screen builds a day plan from these foods.",
+         hi: "SAM (8 बार/दिन, सुविधा-केंद्र देखभाल के साथ): खिचड़ी + घी, दलिया + दूध + गुड़, मूंगफली–गुड़ चिक्की, केला + दही।\n\nMAM (6 बार/दिन): दूध + दलिया, दाल-चावल + घी, अंडा/पनीर, फल + ड्राई फ्रूट्स।\n\nग्रामीण खाद्य जो मदद करते हैं: मूंगफली + गुड़, सत्तू + दूध, पालक + गाजर, शकरकंद।\nशहरी अतिरिक्त: बादाम (5–6/दिन), काजू (3–4), अखरोट (2–3), खजूर (2–3), किशमिश (8–10)।\n\nहर बच्चे के परिणाम पृष्ठ पर बनी आहार योजना इन्हीं खाद्यों से दिन की योजना बनाती है।" } },
+  { id: "rutf", kw: ["rutf", "therapeutic food", "ready to use"],
+    t: { en: "RUTF — therapeutic food", hi: "RUTF — चिकित्सीय आहार" },
+    b: { en: "RUTF = Ready-to-Use Therapeutic Food, a special food for SAM children.\n\nMade of: peanut paste, milk powder, sugar, vegetable oil, vitamins & minerals.\nAbout 500 kcal per packet · no cooking needed · long shelf life.\n\nWhere: NRC, ICDS/Anganwadi, district hospital — given as per programme, not sold as a snack.",
+         hi: "RUTF = Ready-to-Use Therapeutic Food — SAM बच्चों के लिए विशेष आहार।\n\nसंघटन: मूंगफली paste, दूध powder, चीनी, वनस्पति तेल, Vitamins व Minerals।\nलगभग 500 kcal प्रति packet · पकाना नहीं पड़ता · लंबी shelf life।\n\nकहाँ मिलेगा: NRC, ICDS/आंगनवाड़ी, जिला अस्पताल — कार्यक्रम अनुसार दिया जाता है, नाश्ते की तरह नहीं।" } },
+  { id: "nrc", kw: ["nrc", "nutrition rehabilitation", "पोषण पुनर्वास"],
+    t: { en: "NRC — Nutrition Rehabilitation Centre", hi: "NRC — पोषण पुनर्वास केंद्र" },
+    b: { en: "The NRC is where SAM children are treated, usually at the district hospital or CHC.\n\nThere: admission for about 14 days, special therapeutic diet, medical treatment, nutrition education for the mother, and a follow-up plan.\n\nAdmission criteria: MUAC below 11.5 cm, weight-for-height below −3, bilateral oedema, or medical complications.",
+         hi: "NRC में SAM बच्चों का इलाज होता है — आमतौर पर जिला अस्पताल या CHC में।\n\nवहाँ: लगभग 14 दिन भर्ती, विशेष therapeutic diet, चिकित्सा उपचार, माँ को पोषण शिक्षा, और follow-up योजना।\n\nभर्ती के मानदंड: MUAC 11.5 cm से कम, Weight-for-Height −3 से कम, Bilateral Edema, या चिकित्सीय जटिलताएं।" } },
+  { id: "icds", kw: ["icds", "आंगनवाड़ी", "anganwadi", "integrated child"],
+    t: { en: "ICDS & the Anganwadi", hi: "ICDS व आंगनवाड़ी" },
+    b: { en: "ICDS = Integrated Child Development Services. Its six services: supplementary nutrition, pre-school education, nutrition & health education, immunisation, health check-ups, and referral services.\n\nThe Anganwadi worker weighs children, monitors growth, distributes supplementary food, and refers MAM/SAM children.\n\nFor: children 0–6 years, pregnant women, and breastfeeding mothers.",
+         hi: "ICDS = Integrated Child Development Services (एकीकृत बाल विकास सेवाएं)। इसकी छह सेवाएं: पूरक पोषण, पूर्व-विद्यालय शिक्षा, पोषण व स्वास्थ्य शिक्षा, टीकाकरण, स्वास्थ्य जांच, और रेफ़रल सेवाएं।\n\nआंगनवाड़ी कार्यकर्ता बच्चों का वज़न मापती हैं, वृद्धि की निगरानी करती हैं, पूरक आहार बांटती हैं, और MAM/SAM बच्चों को refer करती हैं।\n\nकिनके लिए: 0–6 साल के बच्चे, गर्भवती महिलाएं, स्तनपान कराने वाली माताएं।" } },
+  { id: "breastfeeding", kw: ["breastfeeding", "स्तनपान", "breast milk", "माँ का दूध"],
+    t: { en: "Breastfeeding", hi: "स्तनपान" },
+    b: { en: "WHO guidance:\n• Start within 1 hour of birth.\n• Only breast milk for the first 6 months (no water, no top milk).\n• After 6 months add complementary foods and continue breastfeeding to 2 years.\n\nBenefits: immunity, protection from diarrhoea, brain development, bonding — and it is free.\n\nCommon mistakes: giving top milk/water before 6 months, bottle feeding, starting solids too early.",
+         hi: "WHO दिशानिर्देश:\n• जन्म के 1 घंटे के अंदर शुरू करें।\n• पहले 6 महीने केवल माँ का दूध (न पानी, न ऊपर का दूध)।\n• 6 महीने बाद पूरक आहार जोड़ें और स्तनपान 2 साल तक जारी रखें।\n\nफायदे: रोग-प्रतिरोधक क्षमता, दस्त से बचाव, मस्तिष्क विकास, भावनात्मक बंधन — और मुफ्त।\n\nआम गलतियाँ: 6 महीने से पहले ऊपर का दूध/पानी देना, बोतल से पिलाना, ठोस आहार बहुत जल्दी शुरू करना।" } },
+  { id: "emergency", kw: ["emergency", "helpline", "ambulance", "hospital", "आपातकाल", "help"],
+    t: { en: "Emergency numbers & where to go", hi: "आपातकालीन नंबर व कहाँ जाएं" },
+    b: { en: "🚑 Ambulance: 108 · Mother & child transport: 102 · Child helpline: 1098 · Health helpline: 104 · All emergencies: 112 (tap to call at the top of this page).\n\nWhere to go: Anganwadi centre → PHC (Primary Health Centre) → CHC → District Hospital. SAM with complications → NRC.",
+         hi: "🚑 एम्बुलेंस: 108 · माँ व शिशु परिवहन: 102 · चाइल्ड हेल्पलाइन: 1098 · स्वास्थ्य हेल्पलाइन: 104 · सभी आपात स्थितियाँ: 112 (इस पृष्ठ के ऊपर छूकर कॉल करें)।\n\nकहाँ जाएं: आंगनवाड़ी केंद्र → PHC (प्राथमिक स्वास्थ्य केंद्र) → CHC → जिला अस्पताल। जटिलताओं वाला SAM → NRC।" } },
+  { id: "score", kw: ["health score", "स्वास्थ्य स्कोर", "score", "progress score"],
+    t: { en: "The progress score on a child's card", hi: "बच्चे के कार्ड पर प्रगति स्कोर" },
+    b: { en: "Each child's card in this app shows a progress score out of 100, from the original PoshanDrishti:\n\n• Severity: Normal 40 · MAM 20 · SAM 0\n• MUAC: 12.5 cm+ → 20 · 11.5–12.5 → 10\n• Weight-for-height z: −1 or better → 20 · −2 → 13 · −3 → 6\n• No swelling of feet: 10\n• Anaemia status is not part of a child's record here, so it adds the “unknown” 5 points the original system used.\n\nThe label (On track / Improving / Needs attention) also uses the change since the last visit, and any child not visited for over 30 days is marked Needs attention. It is a simple worklist score to help prioritise visits — it is not clinically validated and never replaces the SAM/MAM classification.",
+         hi: "इस ऐप में हर बच्चे के कार्ड पर 100 में से एक प्रगति स्कोर दिखता है, मूल PoshanDrishti से:\n\n• गंभीरता: Normal 40 · MAM 20 · SAM 0\n• MUAC: 12.5 cm+ → 20 · 11.5–12.5 → 10\n• Weight-for-Height z: −1 या बेहतर → 20 · −2 → 13 · −3 → 6\n• पैरों में सूजन न हो: 10\n• एनीमिया स्थिति बच्चे के रिकॉर्ड का हिस्सा नहीं है, इसलिए मूल प्रणाली वाला “अज्ञात” 5 अंक जुड़ता है।\n\nलेबल (सही दिशा में / सुधार हो रहा है / ध्यान आवश्यक) पिछले दौरे से बदलाव को भी देखता है, और 30 दिन से अधिक समय से न देखा गया बच्चा “ध्यान आवश्यक” माना जाता है। यह दौरों की प्राथमिकता तय करने हेतु एक सरल कार्य-सूची स्कोर है — चिकित्सकीय रूप से मान्य नहीं है और SAM/MAM वर्गीकरण का स्थान कभी नहीं लेता।" } }
+];
+PD.FAQ_QUICK = ["muac", "sam", "mam", "zscore", "edema", "anemia", "stunting", "wasting", "underweight", "diet", "rutf", "nrc", "icds", "breastfeeding", "emergency", "score"];
+/* LG-C-END */
+</script>
+<script>
+"use strict";
+/* ---- Hidden Hunger module data, ported from the original
+   PoshanDrishti HiddenHunger page: 18 observable signs, diet and
+   economic levels, and six nutrient groups with area-specific foods. */
+PD.HH_SYM = [
+  ["Pale / dull skin", "पीली/सुस्त त्वचा"], ["Brittle nails", "कमज़ोर नाखून"], ["Hair loss", "बाल झड़ना"],
+  ["Fatigue / weakness", "थकान/कमज़ोरी"], ["Night blindness", "रात में दिखना कम"], ["Dry eyes", "आंखों का सूखापन"],
+  ["Bleeding gums", "मसूड़ों से खून"], ["Joint pain", "जोड़ों में दर्द"], ["Muscle cramps", "मांसपेशियों में ऐंठन"],
+  ["Bone pain", "हड्डी दर्द"], ["Slow wound healing", "घाव देर से भरना"], ["Frequent infections", "बार-बार बीमारी"],
+  ["Mouth ulcers", "मुंह के छाले"], ["Tongue inflammation", "जीभ में सूजन"], ["Numbness / tingling", "हाथ-पैर सुन्नपन"],
+  ["Pale conjunctiva (inner eyelid)", "आंखों का पीलापन"], ["Brittle bones", "हड्डियां कमज़ोर"], ["Loss of appetite", "भूख न लगना"]
+];
+PD.HH_GROUPS = [
+  { key: "lgNutIron", pts: 25, lvl: "HIGH", sym: [0, 15, 1, 3],
+    foods: { urban: { en: ["Spinach", "Beetroot", "Pomegranate", "Egg", "Paneer"], hi: ["पालक", "चुकंदर", "अनार", "अंडा", "पनीर"] },
+             rural: { en: ["Spinach", "Beetroot", "Jaggery", "Moong dal", "Ragi"], hi: ["पालक", "चुकंदर", "गुड़", "मूंग दाल", "रागी"] },
+             tribal: { en: ["Spinach", "Beetroot", "Sesame", "Jaggery", "Wild greens"], hi: ["पालक", "चुकंदर", "तिल", "गुड़", "जंगली साग"] } },
+    tip: { en: "Eat with Vitamin C — iron absorption increases about 3 times.", hi: "Vitamin C के साथ खाएं — absorption 3 गुना बढ़ता है।" } },
+  { key: "lgNutVitA", pts: 20, lvl: "HIGH", sym: [4, 5, 11],
+    foods: { urban: { en: ["Carrot", "Sweet potato", "Papaya", "Mango", "Broccoli"], hi: ["गाजर", "शकरकंद", "पपीता", "आम", "ब्रोकली"] },
+             rural: { en: ["Carrot", "Red sweet potato", "Banana", "Papaya", "Pumpkin"], hi: ["गाजर", "लाल शकरकंद", "केला", "पपीता", "कद्दू"] },
+             tribal: { en: ["Carrot", "Yellow vegetables", "Wild fruits", "Banana"], hi: ["गाजर", "पीली सब्ज़ियां", "जंगली फल", "केला"] } },
+    tip: { en: "Eat with milk/oil — Vitamin A is fat-soluble.", hi: "दूध/तेल के साथ खाएं — Vitamin A fat-soluble है।" } },
+  { key: "lgNutCalD", pts: 25, lvl: "HIGH", sym: [8, 9, 16],
+    foods: { urban: { en: ["Milk", "Curd", "Paneer", "Ragi", "Almonds"], hi: ["दूध", "दही", "पनीर", "रागी", "बादाम"] },
+             rural: { en: ["Ragi", "Black chickpea", "Sesame", "Jaggery", "Egg", "Milk"], hi: ["रागी", "काले चने", "तिल", "गुड़", "अंडा", "दूध"] },
+             tribal: { en: ["Ragi", "Sesame", "Milk (if available)", "Local green vegetables"], hi: ["रागी", "तिल", "दूध (अगर मिले)", "स्थानीय हरी सब्ज़ियां"] } },
+    tip: { en: "20 minutes of morning sunlight daily is essential.", hi: "रोज़ 20 मिनट सुबह की धूप ज़रूरी है।" } },
+  { key: "lgNutVitC", pts: 15, lvl: "MEDIUM", sym: [6, 10],
+    foods: { urban: { en: ["Amla", "Lemon", "Orange", "Guava", "Kiwi"], hi: ["आंवला", "नींबू", "संतरा", "अमरूद", "कीवी"] },
+             rural: { en: ["Amla", "Lemon", "Mango", "Tomato", "Guava"], hi: ["आंवला", "नींबू", "आम", "टमाटर", "अमरूद"] },
+             tribal: { en: ["Amla", "Lemon", "Wild ber", "Honey"], hi: ["आंवला", "नींबू", "जंगली बेर", "शहद"] } },
+    tip: { en: "One amla a day gives a full day's Vitamin C.", hi: "रोज़ 1 आंवला = पूरे दिन का Vitamin C।" } },
+  { key: "lgNutB12", pts: 15, lvl: "MEDIUM", sym: [12, 13, 14],
+    foods: { urban: { en: ["Egg", "Milk", "Paneer", "Fortified cereal"], hi: ["अंडा", "दूध", "पनीर", "फोर्टिफाइड सीरियल"] },
+             rural: { en: ["Egg", "Milk", "Fenugreek", "Spinach", "Peas"], hi: ["अंडा", "दूध", "मेथी", "पालक", "मटर"] },
+             tribal: { en: ["Egg (if available)", "Milk", "Green leafy vegetables"], hi: ["अंडा (अगर मिले)", "दूध", "हरी पत्तेदार सब्ज़ियां"] } },
+    tip: { en: "B12 deficiency is most common in vegetarians.", hi: "शाकाहारी लोगों में B12 की कमी सबसे common है।" } },
+  { key: "lgNutZinc", pts: 10, lvl: "MEDIUM", sym: [2, 17, 11],
+    foods: { urban: { en: ["Pumpkin seeds", "Peanuts", "Chickpea", "Cashew", "Almonds"], hi: ["कद्दू के बीज", "मूंगफली", "छोले", "काजू", "बादाम"] },
+             rural: { en: ["Pumpkin seeds", "Peanuts", "Chickpea", "Masoor dal"], hi: ["कद्दू के बीज", "मूंगफली", "चना", "मसूर दाल"] },
+             tribal: { en: ["Pumpkin seeds", "Peanuts", "Local nuts"], hi: ["कद्दू के बीज", "मूंगफली", "स्थानीय मेवे"] } },
+    tip: { en: "Zinc is essential for immunity and growth.", hi: "Zinc immunity और growth दोनों के लिए ज़रूरी है।" } }
+];
+/* ---- "Womb to World" pregnancy module data (original PoshanDrishti):
+   trimester diets by area, care recommendations, danger signs, schemes. */
+PD.PREG_DIETS = {
+  t1: { focus: { en: "Folic acid + Iron", hi: "फोलिक एसिड + आयरन" }, cal: "1800–2000 kcal",
+    foods: { urban: { en: ["Spinach", "Broccoli", "Egg", "Orange", "Beetroot", "Paneer", "Fortified cereal"], hi: ["पालक", "ब्रोकली", "अंडा", "संतरा", "चुकंदर", "पनीर", "फोर्टिफाइड सीरियल"] },
+             rural: { en: ["Spinach", "Fenugreek", "Egg", "Beetroot", "Peas", "Chickpea", "Sesame", "Jaggery"], hi: ["पालक", "मेथी", "अंडा", "चुकंदर", "मटर", "छोले", "तिल", "गुड़"] },
+             tribal: { en: ["Spinach", "Wild green vegetables", "Sesame", "Jaggery", "Local dals"], hi: ["पालक", "जंगली हरी सब्ज़ियां", "तिल", "गुड़", "स्थानीय दालें"] } },
+    avoid: { urban: { en: ["Raw fish", "Unpasteurised cheese", "Excess caffeine (tea/coffee)"], hi: ["कच्ची मछली", "बिना पास्चुरीकृत पनीर", "ज़्यादा कैफ़ीन (चाय/कॉफ़ी)"] },
+             rural: { en: ["Raw papaya", "Pineapple", "Too much tea"], hi: ["कच्चा पपीता", "अनानास", "ज़्यादा चाय"] },
+             tribal: { en: ["Raw papaya", "Pineapple", "Herbal medicines without a doctor"], hi: ["कच्चा पपीता", "अनानास", "जड़ी-बूटी दवाएं (बिना Doctor के)"] } } },
+  t2: { focus: { en: "Calcium + Protein + Iron", hi: "Calcium + Protein + आयरन" }, cal: "2200–2400 kcal",
+    foods: { urban: { en: ["Milk", "Curd", "Paneer", "Salmon", "Almonds", "Oats", "Soybean"], hi: ["दूध", "दही", "पनीर", "सैल्मन मछली", "बादाम", "ओट्स", "सोयाबीन"] },
+             rural: { en: ["Milk", "Curd", "Paneer", "Ragi", "Soybean", "Fish", "Egg", "Peas"], hi: ["दूध", "दही", "पनीर", "रागी", "सोयाबीन", "मछली", "अंडा", "मटर"] },
+             tribal: { en: ["Ragi", "Milk (if available)", "Curd", "Local fish", "Kodo", "Jowar"], hi: ["रागी", "दूध (अगर मिले)", "दही", "स्थानीय मछली", "कोदो", "ज्वार"] } },
+    avoid: { urban: { en: ["Junk food", "Excess salt", "Raw eggs"], hi: ["जंक फूड", "ज़्यादा नमक", "कच्चे अंडे"] },
+             rural: { en: ["Junk food", "Excess salt", "Raw eggs"], hi: ["जंक फूड", "ज़्यादा नमक", "कच्चे अंडे"] },
+             tribal: { en: ["Junk food", "Excess spice", "Packaged market food"], hi: ["जंक फूड", "ज़्यादा मसाला", "बाज़ार का पैकेट खाना"] } } },
+  t3: { focus: { en: "Energy + DHA + Iron", hi: "ऊर्जा + DHA + आयरन" }, cal: "2400–2600 kcal",
+    foods: { urban: { en: ["Dry fruits", "Banana", "Honey", "Oily fish", "Walnuts", "Sweet potato", "Avocado"], hi: ["ड्राई फ्रूट्स", "केला", "शहद", "तैलीय मछली", "अखरोट", "शकरकंद", "एवोकाडो"] },
+             rural: { en: ["Ghee", "Dry fruits", "Banana", "Sweet potato", "Coconut", "Walnuts", "Jaggery", "Sesame"], hi: ["घी", "मेवे", "केला", "शकरकंद", "नारियल", "अखरोट", "गुड़", "तिल"] },
+             tribal: { en: ["Ghee", "Maize", "Sweet potato", "Banana", "Coconut", "Local nuts", "Jaggery"], hi: ["घी", "मक्का", "शकरकंद", "केला", "नारियल", "स्थानीय मेवे", "गुड़"] } },
+    avoid: { urban: { en: ["Excess sugar", "Heavy meals at night", "Spicy food"], hi: ["ज़्यादा चीनी", "रात में भारी खाना", "मसालेदार खाना"] },
+             rural: { en: ["Excess sugar", "Heavy meals at night", "Very spicy food"], hi: ["ज़्यादा चीनी", "रात में भारी खाना", "बहुत मसालेदार खाना"] },
+             tribal: { en: ["Excess sugar", "Heavy meals at night", "Hard-to-digest food"], hi: ["ज़्यादा चीनी", "रात में भारी खाना", "कठिन पचने वाला खाना"] } } }
+};
+PD.PREG_RECS = [
+  { i: "💊", en: "Take 1 IFA tablet (iron + folic acid) daily", hi: "रोज़ 1 IFA गोली (Iron + Folic Acid) लें" },
+  { i: "🥗", en: "Protein-rich diet daily: dal, egg, milk, paneer", hi: "प्रोटीन-rich diet: दाल, अंडा, दूध, पनीर रोज़ लें" },
+  { i: "☀️", en: "20–30 minutes of morning sunlight daily", hi: "रोज़ 20–30 मिनट सुबह की धूप लें" },
+  { i: "💧", en: "Drink 8–10 glasses of clean water daily", hi: "रोज़ 8–10 गिलास साफ पानी पिएं" },
+  { i: "🏥", en: "Continue regular ANC check-ups (at least 4)", hi: "नियमित ANC checkup जारी रखें (कम से कम 4)" },
+  { i: "😴", en: "Sleep 8 hours — lie on the left side", hi: "8 घंटे नींद ज़रूरी है — बाईं करवट सोएं" }
+];
+PD.PREG_EMERG = [
+  { en: "Sudden excessive swelling (face, hands, feet)", hi: "अचानक बहुत ज़्यादा सूजन (चेहरा, हाथ, पैर)" },
+  { en: "Severe headache + blurred vision", hi: "तेज़ सिरदर्द + धुंधली नज़र" },
+  { en: "Baby's movements decreased or stopped", hi: "बच्चे की हलचल कम या बंद होना" },
+  { en: "Vaginal bleeding", hi: "योनि से खून आना" },
+  { en: "High fever + abdominal pain", hi: "तेज़ बुखार + पेट दर्द" }
+];
+PD.SCHEMES = [
+  { n: { en: "JSY — Janani Suraksha Yojana", hi: "JSY — जननी सुरक्षा योजना" }, d: { en: "₹1,400 support for institutional delivery", hi: "संस्थागत प्रसव पर ₹1400 सहायता" } },
+  { n: { en: "PMMVY — Pradhan Mantri Matru Vandana Yojana", hi: "PMMVY — PM मातृ वंदना योजना" }, d: { en: "₹5,000 support for the first child", hi: "पहले बच्चे के लिए ₹5000 सहायता" } },
+  { n: { en: "ICDS — Integrated Child Development Services", hi: "ICDS — एकीकृत बाल विकास सेवाएं" }, d: { en: "Free nutrition + health services at the Anganwadi", hi: "आंगनवाड़ी पर मुफ्त पोषण + स्वास्थ्य सेवाएं" } },
+  { n: { en: "Free IFA + Calcium tablets", hi: "मुफ्त IFA + Calcium गोलियां" }, d: { en: "Free medicines from the Anganwadi / PHC", hi: "आंगनवाड़ी / PHC से मुफ्त दवाइयां" } }
+];
+/* ---- Recommended actions by segment × severity, from the original
+   PoshanDrishti segmentation engine (Hinglish originals rendered here
+   as proper English / Hindi pairs). */
+PD.SEG_ACTIONS = {
+  needs_attention: {
+    SAM: { en: "Go to the NRC without delay. Emergency intervention is needed.", hi: "तुरंत NRC जाएं। आपातकालीन हस्तक्षेप आवश्यक है।" },
+    MAM: { en: "Contact the Anganwadi. Start supplementary feeding.", hi: "आंगनवाड़ी से संपर्क करें। पूरक आहार शुरू करें।" },
+    NORMAL: { en: "Continue weekly monitoring. Focus on improving the diet.", hi: "साप्ताहिक निगरानी जारी रखें। आहार सुधार पर ध्यान दें।" } },
+  improving: {
+    SAM: { en: "Continue NRC treatment. Assess every month.", hi: "NRC उपचार जारी रखें। हर महीने आकलन करें।" },
+    MAM: { en: "Continue supplementary feeding. Follow up in 4 weeks.", hi: "पूरक आहार जारी रखें। 4 हफ्ते में फ़ॉलो-अप करें।" },
+    NORMAL: { en: "Progress is good. Monitor monthly.", hi: "प्रगति अच्छी है। मासिक निगरानी करें।" } },
+  on_track: {
+    SAM: { en: "Recovery is excellent. Reassess in 6 weeks.", hi: "सुधार उत्कृष्ट है। 6 हफ्ते में पुनः आकलन करें।" },
+    MAM: { en: "Improvement is good. Monitor quarterly.", hi: "सुधार अच्छा है। त्रैमासिक निगरानी करें।" },
+    NORMAL: { en: "The child is healthy. Continue standard quarterly check-ups.", hi: "बच्चा स्वस्थ है। मानक त्रैमासिक जांच जारी रखें।" } }
+};
+PD.SEG_STALE_ACTION = { en: "Schedule a follow-up assessment.", hi: "फ़ॉलो-अप आकलन तय करें।" };
+/* LG-D-END */
+</script>
+<script>
+"use strict";
+/* =====================================================================
+   Ported rule engines. Each mirrors the original PoshanDrishti logic
+   exactly where the original was a transparent rule; the two places
+   where the original silently filled in defaults are NOT copied:
+   the legacy pregnancy page assumed Hb 11 when unmeasured, and its
+   health score treated a missing weight-for-height z as 0 (+20 pts).
+   Here an unmeasured Hb simply skips that factor (and the result says
+   so), and a missing z-score earns 0 points for that component.
+   ===================================================================== */
+/* Hidden Hunger — original client-side scoring: base 20; diet low +20 /
+   medium +10; economic low +15 / medium +5; each symptom group adds its
+   points once if any of its signs is present; capped at 100. */
+PD.hhAssess = function (inp) {
+  var score = 20;
+  if (inp.diet === "low") score += 20; else if (inp.diet === "medium") score += 10;
+  if (inp.econ === "low") score += 15; else if (inp.econ === "medium") score += 5;
+  var groups = [], count = 0, i, g, j;
+  for (i = 0; i < inp.symptoms.length; i++) if (inp.symptoms[i]) count++;
+  for (g = 0; g < PD.HH_GROUPS.length; g++) {
+    var grp = PD.HH_GROUPS[g], hit = false;
+    for (j = 0; j < grp.sym.length; j++) if (inp.symptoms[grp.sym[j]]) hit = true;
+    if (hit) { score += grp.pts; groups.push(g); }
+  }
+  score = Math.min(score, 100);
+  return { score: score, level: score > 70 ? "HIGH" : (score > 40 ? "MEDIUM" : "LOW"), groups: groups, count: count };
+};
+/* Pregnancy care checklist — original "Womb to World" client-side
+   scoring: base 15; measured Hb <7 +30 / <10 +20 / <11 +10; BMI <18.5
+   +25 / >30 +15; age <18 +20 / >35 +15; ANC <4 +15; diet low +20 /
+   medium +8; economic low +15 / medium +5; diabetes +10; not taking
+   IFA +10; tribal area +8; unsafe water +8; capped at 100.
+   The original's numeric "child outcome predictions" are NOT ported:
+   the output is a care-priority checklist only. */
+PD.pregAssess = function (inp) {
+  var score = 15, factors = [], protective = [];
+  var F = function (k, o) { factors.push({ k: k, o: o || {} }); };
+  var P = function (k, o) { protective.push({ k: k, o: o || {} }); };
+  if (inp.hb !== null && inp.hb !== undefined && !isNaN(inp.hb)) {
+    if (inp.hb < 7) { score += 30; F("pfHbSev", { hb: inp.hb }); }
+    else if (inp.hb < 10) { score += 20; F("pfHbMod", { hb: inp.hb }); }
+    else if (inp.hb < 11) { score += 10; F("pfHbMild", { hb: inp.hb }); }
+    else P("pfHbOk", { hb: inp.hb });
+  }
+  var bmi = null;
+  if (inp.wt > 0 && inp.ht > 0) bmi = Math.round((inp.wt / Math.pow(inp.ht / 100, 2)) * 10) / 10;
+  if (bmi !== null) {
+    if (bmi < 18.5) { score += 25; F("pfBmiLow", { bmi: bmi }); }
+    else if (bmi > 30) { score += 15; F("pfBmiHigh", { bmi: bmi }); }
+    else P("pfBmiOk", { bmi: bmi });
+  }
+  if (inp.ageYears !== null && inp.ageYears !== undefined && !isNaN(inp.ageYears)) {
+    if (inp.ageYears < 18) { score += 20; F("pfAgeYoung", { age: inp.ageYears }); }
+    else if (inp.ageYears > 35) { score += 15; F("pfAgeOld", { age: inp.ageYears }); }
+    else P("pfAgeOk", { age: inp.ageYears });
+  }
+  if (inp.anc !== null && inp.anc !== undefined && !isNaN(inp.anc)) {
+    if (inp.anc < 4) { score += 15; F("pfAncLow", { n: inp.anc }); }
+    else P("pfAncOk", { n: inp.anc });
+  }
+  if (inp.diet === "low") { score += 20; F("pfDietLow"); }
+  else if (inp.diet === "medium") score += 8;
+  else if (inp.diet === "high") P("pfDietOk");
+  if (inp.econ === "low") { score += 15; F("pfEconLow"); }
+  else if (inp.econ === "medium") score += 5;
+  else if (inp.econ === "high") P("pfEconOk");
+  if (inp.diabetes) { score += 10; F("pfDiab"); }
+  if (inp.ifa === "no") { score += 10; F("pfIfaNo"); }
+  else if (inp.ifa === "regular") P("pfIfaOk");
+  if (inp.area === "tribal") { score += 8; F("pfTribal"); }
+  if (inp.water === "unsafe") { score += 8; F("pfWater"); }
+  score = Math.min(score, 100);
+  return { score: score, level: score > 70 ? "HIGH" : (score > 40 ? "MEDIUM" : "LOW"), factors: factors, protective: protective, bmi: bmi, hbUsed: (inp.hb !== null && inp.hb !== undefined && !isNaN(inp.hb)) };
+};
+/* Progress score + segment — original PoshanDrishti segmentation
+   engine: severity 40/20/0, MUAC >=12.5cm 20 / >=11.5 10, weight-for-
+   height z >=-1 20 / >=-2 13 / >=-3 6, anaemia unknown +5 (a child's
+   record here carries no anaemia status), no oedema +10. Segment:
+   stale (>30 days since last visit) overrides to needs_attention;
+   score <40 needs_attention; >=70 on_track (severe decline < -15
+   drops to improving); 40-69 declining needs_attention else improving.
+   Trend: score change vs previous visit, > +5 improving, < -5 declining. */
+PD.visitScore = function (v) {
+  var s = (v.acute === "NORMAL") ? 40 : (v.acute === "MAM" ? 20 : 0);
+  if (v.muacMm !== null && v.muacMm !== undefined) { var cm = v.muacMm / 10; if (cm >= 12.5) s += 20; else if (cm >= 11.5) s += 10; }
+  if (v.whz !== null && v.whz !== undefined) { if (v.whz >= -1) s += 20; else if (v.whz >= -2) s += 13; else if (v.whz >= -3) s += 6; }
+  s += 5;
+  if (!v.oedema) s += 10;
+  return Math.max(0, Math.min(100, Math.round(s)));
+};
+PD.childProgress = function (child) {
+  if (!child.visits || !child.visits.length) return null;
+  var latest = child.visits[child.visits.length - 1];
+  var score = PD.visitScore(latest);
+  var trend = "neutral", delta = 0;
+  if (child.visits.length >= 2) {
+    delta = score - PD.visitScore(child.visits[child.visits.length - 2]);
+    trend = delta > 5 ? "improving" : (delta < -5 ? "declining" : "stable");
+  }
+  var daysSince = PD.daysBetween(latest.date, PD.todayISO());
+  var stale = daysSince > 30;
+  var segment;
+  if (stale) segment = "needs_attention";
+  else if (score < 40) segment = "needs_attention";
+  else if (score >= 70) segment = (trend === "declining" && delta < -15) ? "improving" : "on_track";
+  else segment = (trend === "declining") ? "needs_attention" : "improving";
+  return { score: score, segment: segment, trend: trend, delta: delta, daysSince: daysSince, stale: stale, severity: latest.acute };
+};
+/* Diet plan — original PoshanDrishti DietPlan generator: meals are
+   assembled by food tag from the food database, area-priority foods
+   first, with the original's fallback foods; meal times, calorie
+   bands and tips are the original's. (The original located the user
+   through the Nominatim web service; here the worker picks the area
+   type — rural / urban / tribal — so nothing leaves the phone.) */
+PD._foodIdx = function (name) { for (var i = 0; i < PD.FOODS.length; i++) if (PD.FOODS[i][0] === name) return i; return 0; };
+PD.foodName = function (i) { return PD.FOODS[i][PD.lang === "hi" ? 1 : 0]; };
+PD._foodPool = function (area) {
+  var idx = [];
+  PD.FOODS.forEach(function (f, i) { if (f[3].split(",").indexOf("u") >= 0 && area !== "urban") return; idx.push(i); });
+  var pri = PD.FOOD_AREA[area] || [];
+  idx.sort(function (a, b) { var am = pri.indexOf(PD.FOODS[a][0]) >= 0 ? 0 : 1, bm = pri.indexOf(PD.FOODS[b][0]) >= 0 ? 0 : 1; return am - bm; });
+  return idx;
+};
+PD._pick = function (pool, tag, n, fallbackName) {
+  var c = 0;
+  for (var i = 0; i < pool.length; i++) { var f = PD.FOODS[pool[i]]; if (f[3].split(",").indexOf(tag) >= 0) { if (c === n) return pool[i]; c++; } }
+  return PD._foodIdx(fallbackName);
+};
+PD.dietPlan = function (acute, area) {
+  var pool = PD._foodPool(area || "rural");
+  var P = function (tag, n, fb) { return PD._pick(pool, tag, n, fb); };
+  var L = function (name) { return PD._foodIdx(name); };
+  var M = [];
+  if (acute === "SAM") {
+    M = [
+      { t: "lgTm6", items: [P("protein", 0, "Milk"), P("fat", 0, "Ghee")], n: "lgNtEnergy" },
+      { t: "lgTm8", items: [P("grain", 0, "Porridge (Daliya)"), P("fruit", 0, "Banana")], n: "lgNtBreakfast" },
+      { t: "lgTm10", items: [P("fat", 0, "Peanuts"), L("Jaggery")], n: "lgNtSnack" },
+      { t: "lgTm12", items: [P("grain", 0, "Rice"), P("protein", 0, "Dal"), P("veg", 0, "Spinach"), P("fat", 0, "Ghee")], n: "lgNtMain" },
+      { t: "lgTm14", items: [P("protein", 1, "Curd"), P("fruit", 0, "Banana")], n: "lgNtProtein" },
+      { t: "lgTm16", items: [L("Khichdi"), P("fat", 0, "Ghee")], n: "lgNtLight" },
+      { t: "lgTm18", items: [L("Roti"), P("veg", 1, "Carrot")], n: "lgNtDinner" },
+      { t: "lgTm20", items: [L("Milk + Turmeric")], n: "lgNtBed" }
+    ];
+    return { calKey: "lgCalSam", meals: M, tips: ["lgTipSam1", "lgTipSam2", "lgTipSam3", "lgTipSam4"] };
+  }
+  if (acute === "MAM") {
+    M = [
+      { t: "lgTm7", items: [P("protein", 0, "Milk"), P("grain", 0, "Porridge (Daliya)")], n: "lgNtBreakfast" },
+      { t: "lgTm10", items: [P("fruit", 0, "Banana"), P("fat", 0, "Peanuts")], n: "lgNtSnack" },
+      { t: "lgTm1230", items: [P("grain", 0, "Rice"), P("protein", 0, "Dal"), P("veg", 0, "Spinach")], n: "lgNtLunch" },
+      { t: "lgTm15", items: [P("protein", 1, "Curd"), L("Jaggery")], n: "lgNtEnergy" },
+      { t: "lgTm1830", items: [L("Roti"), P("veg", 1, "Carrot"), P("protein", 0, "Dal")], n: "lgNtDinner" },
+      { t: "lgTm2030", items: [P("protein", 0, "Milk")], n: "lgNtBed" }
+    ];
+    return { calKey: "lgCalMam", meals: M, tips: ["lgTipMam1", "lgTipMam2", "lgTipMam3"] };
+  }
+  M = [
+    { t: "lgTm730", items: [P("protein", 0, "Milk"), L("Roti")], n: "lgNtBreakfast" },
+    { t: "lgTm10", items: [P("fruit", 0, "Banana")], n: "lgNtSnack" },
+    { t: "lgTm1230", items: [P("grain", 0, "Rice"), P("protein", 0, "Dal"), P("veg", 0, "Spinach")], n: "lgNtLunch" },
+    { t: "lgTm16", items: [P("protein", 0, "Milk"), L("Biscuits")], n: "lgNtEvening" },
+    { t: "lgTm1930", items: [L("Roti"), P("veg", 0, "Spinach"), P("protein", 0, "Dal")], n: "lgNtDinner" }
+  ];
+  return { calKey: "lgCalNorm", meals: M, tips: ["lgTipNorm1", "lgTipNorm2"] };
+};
+/* LG-E-END */
+</script>
+<script>
+"use strict";
+/* =====================================================================
+   Legacy integration — rendering and wiring. New records are stored
+   inside the existing family record (child.hhChecks, motherCheck.preg)
+   in the same localStorage store; nothing is sent anywhere.
+   ===================================================================== */
+PD.L = function (o) { return (PD.lang === "hi" && o.hi) ? o.hi : o.en; };
+PD.state.pregTouched = false;
+PD.state.dietArea = "rural";
+PD.state.faqSel = null;
+PD.state.hh = null;
+/* ---------- pregnancy checklist: form -> mother check ---------- */
+PD.syncPregCard = function () {
+  var el = document.querySelector('input[name="preg"]:checked');
+  var card = document.getElementById("pregCard");
+  if (card) card.classList.toggle("hidden", !el || el.value === "no");
+};
+PD.resetPregForm = function () {
+  PD.state.pregTouched = false;
+  ["pgAnc", "pgWt", "pgHt"].forEach(function (id) { var e = document.getElementById(id); if (e) e.value = ""; });
+  var set = function (name, val) { var e = document.querySelector('input[name="' + name + '"][value="' + val + '"]'); if (e) e.checked = true; };
+  var unset = function (name) { document.querySelectorAll('input[name="' + name + '"]').forEach(function (e) { e.checked = false; }); };
+  unset("pgdiet"); unset("pgecon");
+  set("pgifa", "no"); set("pgdiab", "no"); set("pgwater", "safe"); set("pgtet", "no"); set("pgarea", "rural");
+  PD.syncPregCard();
+};
+PD.extendMotherCheck = function (chk) {
+  chk.preg = null;
+  if (!PD.state.pregTouched || !chk.pregnant || chk.pregnant === "no") return;
+  var g = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ""; };
+  var radio = function (name) { var e = document.querySelector('input[name="' + name + '"]:checked'); return e ? e.value : null; };
+  var ancRaw = g("pgAnc"), wtRaw = g("pgWt"), htRaw = g("pgHt");
+  var inp = {
+    hb: (chk.hb !== null && chk.hb !== undefined) ? Number(chk.hb) : null,
+    wt: wtRaw === "" ? null : parseFloat(wtRaw), ht: htRaw === "" ? null : parseFloat(htRaw),
+    ageYears: chk.ageYears, anc: ancRaw === "" ? null : parseInt(ancRaw, 10),
+    diet: radio("pgdiet"), econ: radio("pgecon"), diabetes: radio("pgdiab") === "yes",
+    ifa: radio("pgifa"), area: radio("pgarea") || "rural", water: radio("pgwater") || "safe"
+  };
+  var r = PD.pregAssess(inp);
+  chk.preg = {
+    trimester: chk.pregnant, anc: inp.anc, tetanus: radio("pgtet") || "no",
+    diet: inp.diet, econ: inp.econ, ifa: inp.ifa, diabetes: inp.diabetes, water: inp.water, area: inp.area,
+    wt: inp.wt, ht: inp.ht, bmi: r.bmi, score: r.score, level: r.level,
+    factors: r.factors, protective: r.protective, hbUsed: r.hbUsed
+  };
+};
+/* ---------- pregnancy result card ---------- */
+PD.factorListHTML = function (list) {
+  if (!list.length) return "<p>" + PD.esc(PD.t("lgPregNone")) + "</p>";
+  return '<ul class="reasons">' + list.map(function (f) { return "<li>" + PD.esc(PD.fmt(f.k, f.o)) + "</li>"; }).join("") + "</ul>";
+};
+PD.pregResultHTML = function (fam, chk) {
+  var p = chk.preg; if (!p) return "";
+  var cls = p.level === "HIGH" ? "b-high" : (p.level === "MEDIUM" ? "b-mod" : "b-low");
+  var txt = PD.t(p.level === "HIGH" ? "lgPregHigh" : (p.level === "MEDIUM" ? "lgPregMed" : "lgPregLow"));
+  var diet = PD.PREG_DIETS[p.trimester] || PD.PREG_DIETS.t2;
+  var area = p.area || "rural";
+  var lang = PD.lang === "hi" ? "hi" : "en";
+  var tags = function (arr) { return arr.map(function (x) { return '<span class="foodtag">' + PD.esc(x) + "</span>"; }).join(""); };
+  var h = '<div class="result"><div class="rk">' + PD.esc(PD.t("lgPregResultK")) + "</div>";
+  h += "<h3>" + PD.esc(fam.motherName || PD.t("motherTitle")) + "</h3>";
+  h += '<p style="margin:10px 0 2px"><span class="badge ' + cls + '">' + PD.esc(txt) + "</span></p>";
+  h += '<p style="margin:6px 0"><b>' + PD.esc(PD.fmt("lgPregScoreLine", { score: p.score })) + "</b></p>";
+  h += '<p style="margin:10px 0 0"><b>' + PD.esc(PD.t("lgPregFactorsT")) + "</b></p>" + PD.factorListHTML(p.factors);
+  h += '<p style="margin:10px 0 0"><b>' + PD.esc(PD.t("lgPregProtectT")) + "</b></p>" + PD.factorListHTML(p.protective);
+  if (!p.hbUsed) h += '<div class="flags">' + PD.esc(PD.t("lgPregHbMissing")) + "</div>";
+  if (p.tetanus === "no") h += '<div class="flags">' + PD.esc(PD.t("lgPregTetDue")) + "</div>";
+  h += '<div class="trendbox"><b>' + PD.esc(PD.t("lgPregDietT")) + "</b> · " + PD.esc(PD.L(diet.focus)) + " · " + PD.esc(diet.cal)
+    + '<p style="margin:8px 0 2px"><b>' + PD.esc(PD.t("lgPregFoodsT")) + "</b></p>" + tags(diet.foods[area][lang])
+    + '<p style="margin:8px 0 2px"><b>' + PD.esc(PD.t("lgPregAvoidT")) + "</b></p>" + tags(diet.avoid[area][lang]) + "</div>";
+  h += '<p style="margin:10px 0 0"><b>' + PD.esc(PD.t("lgPregRecsT")) + '</b></p><ul class="reasons">'
+    + PD.PREG_RECS.map(function (r) { return "<li>" + r.i + " " + PD.esc(PD.L(r)) + "</li>"; }).join("") + "</ul>";
+  h += '<div class="actionbox amber"><p><b>' + PD.esc(PD.t("lgPregEmergT")) + '</b></p><ul class="reasons">'
+    + PD.PREG_EMERG.map(function (r) { return "<li>" + PD.esc(PD.L(r)) + "</li>"; }).join("") + "</ul></div>";
+  h += '<p class="smalldisc">' + PD.esc(PD.t("discTop")) + "</p></div>";
+  return h;
+};
+/* ---------- diet plan card (per child, on results) ---------- */
+PD.dietPlanInnerHTML = function (acute) {
+  var plan = PD.dietPlan(acute, PD.state.dietArea);
+  var h = '<p style="margin:4px 0"><b>' + PD.esc(PD.t(plan.calKey)) + "</b></p>";
+  plan.meals.forEach(function (m) {
+    h += '<div class="mealrow"><span class="mt">' + PD.esc(PD.t(m.t)) + '</span><span class="mm">'
+      + m.items.map(function (i) { return PD.esc(PD.foodName(i)); }).join(" + ")
+      + '<span class="mn">' + PD.esc(PD.t(m.n)) + "</span></span></div>";
+  });
+  h += '<ul class="reasons">' + plan.tips.map(function (k) { return "<li>" + PD.esc(PD.t(k)) + "</li>"; }).join("") + "</ul>";
+  h += '<p class="smalldisc">' + PD.esc(PD.t(acute === "SAM" ? "lgDietNoteSam" : "lgDietNoteGen")) + "</p>";
+  return h;
+};
+PD.dietPlanHTML = function (child, visit) {
+  var badgeCls = visit.acute === "SAM" ? "b-sam" : (visit.acute === "MAM" ? "b-mam" : "b-ok");
+  var title = PD.t(visit.acute === "SAM" ? "samT" : (visit.acute === "MAM" ? "mamT" : "normT"));
+  var areas = ["rural", "urban", "tribal"];
+  var seg = areas.map(function (a) {
+    return '<label><input type="radio" name="dietarea_' + child.id + '" value="' + a + '" data-diet-area="' + child.id + '|' + visit.acute + '"' + (PD.state.dietArea === a ? " checked" : "") + "><span>" + PD.esc(PD.t(a === "rural" ? "lgAreaRural" : (a === "urban" ? "lgAreaUrban" : "lgAreaTribal"))) + "</span></label>";
+  }).join("");
+  return '<div class="result"><div class="rk">' + PD.esc(PD.t("lgDietResultK")) + "</div>"
+    + "<h3>" + PD.esc(child.name || PD.t("childTitle")) + ' · <span class="badge ' + badgeCls + '">' + PD.esc(title) + "</span></h3>"
+    + '<div class="field"><label class="flabel">' + PD.esc(PD.t("lgAreaT")) + '</label><div class="seg">' + seg + "</div></div>"
+    + '<div id="diet_' + child.id + '">' + PD.dietPlanInnerHTML(visit.acute) + "</div>"
+    + '<p class="smalldisc">' + PD.esc(PD.t("discTop")) + "</p></div>";
+};
+/* ---------- results: append pregnancy + diet cards ---------- */
+var _pdRenderResults = PD.renderResults;
+PD.renderResults = function (fam, savedChildren, motherChk) {
+  _pdRenderResults(fam, savedChildren, motherChk);
+  var extra = "";
+  if (motherChk && motherChk.preg) extra += PD.pregResultHTML(fam, motherChk);
+  (savedChildren || []).forEach(function (pair) { extra += PD.dietPlanHTML(pair.child, pair.visit); });
+  if (extra) document.getElementById("resultsWrap").insertAdjacentHTML("beforeend", extra);
+};
+/* ---------- family view: progress score + hidden hunger ---------- */
+var _pdRenderFamily = PD.renderFamily;
+PD.renderFamily = function (famId) { _pdRenderFamily(famId); PD.decorateFamily(famId); };
+PD.decorateFamily = function (famId) {
+  var fam = PD.getFam(famId); if (!fam) return;
+  var wrap = document.getElementById("famDetail"); if (!wrap) return;
+  var cards = [];
+  for (var ci = 0; ci < wrap.children.length; ci++) if (wrap.children[ci].classList && wrap.children[ci].classList.contains("card")) cards.push(wrap.children[ci]);
+  fam.children.forEach(function (c, i) {
+    var card = cards[i]; if (!card) return;
+    var h = "";
+    var cp = PD.childProgress(c);
+    if (cp) {
+      var segKey = cp.segment === "on_track" ? "lgSegOnTrack" : (cp.segment === "improving" ? "lgSegImproving" : "lgSegNeeds");
+      var segCls = cp.segment === "on_track" ? "b-ok" : (cp.segment === "improving" ? "b-info" : "b-mam");
+      h += '<p style="margin:10px 0 0"><span class="badge ' + segCls + '">' + PD.esc(PD.fmt("lgScoreLine", { score: cp.score })) + " · " + PD.esc(PD.t(segKey)) + "</span></p>";
+      if (cp.stale) h += '<p class="smalldisc">' + PD.esc(PD.fmt("lgStaleNote", { days: cp.daysSince })) + "</p>";
+      var act = cp.stale ? PD.L(PD.SEG_STALE_ACTION) : PD.L((PD.SEG_ACTIONS[cp.segment] || {})[cp.severity] || PD.SEG_ACTIONS[cp.segment].NORMAL);
+      h += '<p class="smalldisc"><b>' + PD.esc(PD.t("lgActionWord")) + ":</b> " + PD.esc(act) + "</p>";
+      h += '<p class="smalldisc">' + PD.esc(PD.t("lgScoreNote")) + "</p>";
+    }
+    if (c.hhChecks && c.hhChecks.length) {
+      var last = c.hhChecks[c.hhChecks.length - 1];
+      h += '<p class="smalldisc">' + PD.esc(PD.fmt("lgHHistLine", { date: PD.fmtDate(last.date), level: PD.t(last.level === "HIGH" ? "lgHHLevelShortHigh" : (last.level === "MEDIUM" ? "lgHHLevelShortMed" : "lgHHLevelShortLow")), score: last.score })) + "</p>";
+    }
+    h += '<div class="btnrow"><button type="button" class="btn ghost" data-hh="' + fam.id + "|" + c.id + '">' + PD.esc(PD.t("lgHHBtn")) + "</button></div>";
+    card.insertAdjacentHTML("beforeend", h);
+  });
+  var pregChk = null;
+  fam.motherChecks.forEach(function (mc) { if (mc.preg) pregChk = mc; });
+  if (pregChk) {
+    wrap.insertAdjacentHTML("beforeend", '<div class="card"><h3>' + PD.esc(PD.t("lgPregTitle")) + '</h3><p class="sub">'
+      + PD.esc(PD.fmt("lgPregHistLine", { date: PD.fmtDate(pregChk.date), level: PD.t(pregChk.preg.level === "HIGH" ? "lgPregHigh" : (pregChk.preg.level === "MEDIUM" ? "lgPregMed" : "lgPregLow")) }))
+      + '</p><p class="smalldisc">' + PD.esc(PD.fmt("lgPregScoreLine", { score: pregChk.preg.score })) + "</p></div>");
+  }
+};
+/* ---------- Saathi help view ---------- */
+PD.faqTopic = function (id) { for (var i = 0; i < PD.FAQ.length; i++) if (PD.FAQ[i].id === id) return PD.FAQ[i]; return null; };
+PD.buildFaqChips = function () {
+  var wrap = document.getElementById("faqChips"); if (!wrap) return;
+  var q = (document.getElementById("faqSearch").value || "").toLowerCase().trim();
+  var list = PD.FAQ.filter(function (t) {
+    if (!q) return PD.FAQ_QUICK.indexOf(t.id) >= 0 || true;
+    if (PD.L(t.t).toLowerCase().indexOf(q) >= 0) return true;
+    return t.kw.some(function (k) { return k.toLowerCase().indexOf(q) >= 0 || q.indexOf(k.toLowerCase()) >= 0; });
+  });
+  if (!list.length) { wrap.innerHTML = '<p class="sub">' + PD.esc(PD.t("lgFaqNone")) + "</p>"; return; }
+  wrap.innerHTML = list.map(function (t) {
+    return '<button type="button" class="btn small ghost" style="margin:0 6px 6px 0" data-faq="' + t.id + '">' + PD.esc(PD.L(t.t)) + "</button>";
+  }).join("");
+};
+PD.showFaq = function (id) {
+  var t = PD.faqTopic(id); var box = document.getElementById("faqAnswer"); if (!t || !box) return;
+  PD.state.faqSel = id;
+  var body = PD.L(t.b);
+  box.innerHTML = '<div class="trendbox"><b>' + PD.esc(PD.L(t.t)) + '</b><div class="faqbody">' + PD.esc(body) + "</div>"
+    + '<button type="button" class="listenbtn" data-speak="' + PD.esc(body.replace(/\n/g, " ")) + '">' + PD.esc(PD.t("listen")) + "</button></div>";
+};
+PD.renderSchemes = function () {
+  var box = document.getElementById("schemesBox"); if (!box) return;
+  box.innerHTML = PD.SCHEMES.map(function (s) {
+    return '<div class="histitem"><span class="hd">' + PD.esc(PD.L(s.n)) + '</span><br><span class="hm">' + PD.esc(PD.L(s.d)) + "</span></div>";
+  }).join("");
+};
+PD.renderHelp = function () { PD.buildFaqChips(); PD.renderSchemes(); var s = document.getElementById("faqSearch"); if (s) s.placeholder = PD.t("lgFaqPh"); };
+/* ---------- hidden hunger view ---------- */
+PD.buildHHSymChips = function () {
+  var wrap = document.getElementById("hhSymChips"); if (!wrap) return;
+  var keep = function (id) { var e = document.getElementById(id); return e ? e.checked : false; };
+  var old = PD.HH_SYM.map(function (_, i) { return keep("hhs_" + i); });
+  wrap.innerHTML = PD.HH_SYM.map(function (s, i) {
+    return '<label class="chipcheck"><input type="checkbox" id="hhs_' + i + '"><span>' + PD.esc(PD.lang === "hi" ? s[1] : s[0]) + "</span></label>";
+  }).join("");
+  old.forEach(function (v, i) { document.getElementById("hhs_" + i).checked = v; });
+};
+PD.openHH = function (famId, childId) {
+  var fam = PD.getFam(famId); if (!fam) return;
+  var child = null;
+  fam.children.forEach(function (c) { if (c.id === childId) child = c; });
+  if (!child) return;
+  PD.state.hh = { famId: famId, childId: childId };
+  document.getElementById("hhTitle").textContent = (child.name || PD.t("childTitle")) + " — " + PD.t("lgHHBtn").replace("🥦 ", "");
+  ["hhdiet", "hhecon"].forEach(function (n) { document.querySelectorAll('input[name="' + n + '"]').forEach(function (e) { e.checked = false; }); });
+  var ar = document.querySelector('input[name="hharea"][value="rural"]'); if (ar) ar.checked = true;
+  PD.HH_SYM.forEach(function (_, i) { var e = document.getElementById("hhs_" + i); if (e) e.checked = false; });
+  PD.buildHHSymChips();
+  document.getElementById("hhResult").innerHTML = "";
+  document.getElementById("hhError").textContent = "";
+  PD.show("hhunger");
+};
+PD.hhResultHTML = function (r, area) {
+  var lang = PD.lang === "hi" ? "hi" : "en";
+  var cls = r.level === "HIGH" ? "b-sam" : (r.level === "MEDIUM" ? "b-mam" : "b-ok");
+  var txt = PD.t(r.level === "HIGH" ? "lgHHLevelHigh" : (r.level === "MEDIUM" ? "lgHHLevelMed" : "lgHHLevelLow"));
+  var h = '<div class="result"><div class="rk">' + PD.esc(PD.t("lgHHResultK")) + "</div>";
+  h += '<p style="margin:10px 0 2px"><span class="badge ' + cls + '">' + PD.esc(txt) + "</span></p>";
+  h += '<p style="margin:6px 0"><b>' + PD.esc(PD.fmt("lgHHScoreLine", { score: r.score })) + '</b><br><span class="smalldisc">' + PD.esc(PD.fmt("lgHHCheckedLine", { n: r.count, total: PD.HH_SYM.length })) + "</span></p>";
+  r.groups.forEach(function (gi) {
+    var g = PD.HH_GROUPS[gi];
+    var foods = (g.foods[area] || g.foods.rural)[lang];
+    h += '<div class="nutdef"><b>' + PD.esc(PD.t(g.key)) + '</b> <span class="badge ' + (g.lvl === "HIGH" ? "b-mam" : "b-info") + '">' + g.lvl + '</span>'
+      + '<p style="margin:6px 0 2px"><b>' + PD.esc(PD.t("lgHHFoodsWord")) + ":</b> " + foods.map(function (x) { return '<span class="foodtag">' + PD.esc(x) + "</span>"; }).join("") + "</p>"
+      + '<p class="smalldisc">' + PD.esc(PD.t("lgHHTipWord")) + ": " + PD.esc(PD.L(g.tip)) + "</p></div>";
+  });
+  h += '<p class="smalldisc">' + PD.esc(PD.t("discTop")) + "</p></div>";
+  return h;
+};
+PD.submitHH = function () {
+  var ctx = PD.state.hh; if (!ctx) return;
+  var radio = function (name) { var e = document.querySelector('input[name="' + name + '"]:checked'); return e ? e.value : null; };
+  var diet = radio("hhdiet"), econ = radio("hhecon"), area = radio("hharea") || "rural";
+  var err = document.getElementById("hhError");
+  if (!diet || !econ) { err.textContent = PD.t("lgHHNeedLevels"); return; }
+  err.textContent = "";
+  var symptoms = PD.HH_SYM.map(function (_, i) { var e = document.getElementById("hhs_" + i); return e ? e.checked : false; });
+  var r = PD.hhAssess({ diet: diet, econ: econ, symptoms: symptoms });
+  var fams = PD.load();
+  fams.forEach(function (f) {
+    if (f.id !== ctx.famId) return;
+    f.children.forEach(function (c) {
+      if (c.id !== ctx.childId) return;
+      if (!Array.isArray(c.hhChecks)) c.hhChecks = [];
+      c.hhChecks.push({ date: PD.todayISO(), score: r.score, level: r.level, diet: diet, econ: econ, area: area, symptoms: symptoms, groups: r.groups });
+    });
+  });
+  PD.store(fams);
+  document.getElementById("hhResult").innerHTML = PD.hhResultHTML(r, area);
+};
+/* ---------- i18n: re-render legacy views on language switch ---------- */
+var _pdApplyI18n = PD.applyI18n;
+PD.applyI18n = function () {
+  _pdApplyI18n();
+  if (PD.state.view === "help") PD.renderHelp();
+  if (PD.state.view === "hhunger") PD.buildHHSymChips();
+  if (PD.state.view === "visit") PD.syncPregCard();
+};
+/* ---------- wiring ---------- */
+document.getElementById("btnHelp").addEventListener("click", function () { PD.renderHelp(); PD.show("help"); });
+document.getElementById("btnHHGo").addEventListener("click", function () { PD.submitHH(); });
+document.getElementById("hhBack").addEventListener("click", function () { if (PD.state.hh) PD.renderFamily(PD.state.hh.famId); else { PD.renderHome(); PD.show("home"); } });
+document.getElementById("btnNewVisit").addEventListener("click", function () { PD.resetPregForm(); });
+document.getElementById("btnFamVisit").addEventListener("click", function () { PD.resetPregForm(); });
+document.getElementById("faqSearch").addEventListener("input", function () {
+  PD.buildFaqChips();
+  var q = (document.getElementById("faqSearch").value || "").toLowerCase().trim();
+  if (q.length >= 3) {
+    for (var i = 0; i < PD.FAQ.length; i++) {
+      var hit = PD.FAQ[i].kw.some(function (k) { return q.indexOf(k.toLowerCase()) >= 0; });
+      if (hit) { PD.showFaq(PD.FAQ[i].id); break; }
+    }
+  }
+});
+document.addEventListener("click", function (ev) {
+  var hh = ev.target.closest("[data-hh]");
+  if (hh) { var p = hh.getAttribute("data-hh").split("|"); PD.openHH(p[0], p[1]); return; }
+  var fq = ev.target.closest("[data-faq]");
+  if (fq) { PD.showFaq(fq.getAttribute("data-faq")); return; }
+});
+document.addEventListener("change", function (ev) {
+  var t = ev.target;
+  if (t.name === "preg") { PD.syncPregCard(); return; }
+  if (t.name && t.name.indexOf("dietarea_") === 0) {
+    var parts = (t.getAttribute("data-diet-area") || "").split("|");
+    PD.state.dietArea = t.value;
+    var box = document.getElementById("diet_" + parts[0]);
+    if (box && parts[1]) box.innerHTML = PD.dietPlanInnerHTML(parts[1]);
+    return;
+  }
+  if (t.closest && t.closest("#pregCard")) PD.state.pregTouched = true;
+});
+document.addEventListener("input", function (ev) {
+  if (ev.target.closest && ev.target.closest("#pregCard")) PD.state.pregTouched = true;
+});
+PD.applyI18n();
+/* LG-F-END */
 </script>
 </body>
 </html>
